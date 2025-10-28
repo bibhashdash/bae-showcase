@@ -7,10 +7,10 @@ export function cn(...inputs: ClassValue[]) {
 }
 
 export const loginSchema = z.object({
-    email: z.email(),
+    email: z.email({error: "Invalid email format"}),
     password: z.string().refine((val) =>
             /[A-Za-z]/.test(val) && /\d/.test(val) && /[^A-Za-z0-9]/.test(val),
-        { error: "Password must include a letter, a number, and a special character", path: ["confirm"] }
+        { error: "Password must include a letter, a number, and a special character" }
     ),
 })
 
