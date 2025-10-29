@@ -1,33 +1,33 @@
-"use client";
-import {useForm, Controller} from "react-hook-form";
-import {zodResolver} from "@hookform/resolvers/zod";
-import * as zod from "zod";
-import {loginSchema} from "@/lib/utils";
+"use client"
 import {Field, FieldDescription, FieldError, FieldGroup, FieldLabel, FieldSet, FieldTitle} from "@/components/ui/field";
+import {Controller, useForm} from "react-hook-form";
 import {Input} from "@/components/ui/input";
-import {Button} from "@/components/ui/button"
-import Link from "next/link";
+import {Button} from "@/components/ui/button";
+import * as zod from "zod";
+import {registerSchema} from "@/lib/utils";
+import {zodResolver} from "@hookform/resolvers/zod";
 
-const defaultValues: zod.infer<typeof loginSchema> = {
+const defaultValues: zod.infer<typeof registerSchema> = {
     email: "",
     password: "",
+    confirm: ""
 }
 
-export default function LoginPage({}) {
-    const {control, handleSubmit, reset} = useForm<zod.infer<typeof loginSchema>>({
-        resolver: zodResolver(loginSchema),
+export default function RegisterPage (){
+    const {control, handleSubmit, reset} = useForm<zod.infer<typeof registerSchema>>({
+        resolver: zodResolver(registerSchema),
         mode: "onSubmit",
-        defaultValues,
+        defaultValues: defaultValues,
     })
-    const onSubmit = (data: zod.infer<typeof loginSchema>) => {
+    const onSubmit = (data: zod.infer<typeof registerSchema>) => {
         console.log(data)
         reset(defaultValues)
     }
     return (
         <div className="flex justify-center items-center gap-2 h-full w-full">
-            <form id="loginForm" onSubmit={handleSubmit(onSubmit)}>
+            <form id="registerForm" onSubmit={handleSubmit(onSubmit)}>
                 <FieldSet>
-                    <FieldTitle>Login</FieldTitle>
+                    <FieldTitle>Sign Up</FieldTitle>
                     <FieldDescription>Enjoy the best of this journaling app</FieldDescription>
                     <FieldGroup>
                         <Controller name="email" control={control} render={({field, fieldState, formState}) => (
@@ -56,17 +56,25 @@ export default function LoginPage({}) {
                                 {fieldState.invalid && <FieldError errors={[fieldState.error]}/>}
                             </Field>
                         )}/>
+                        <Controller name="confirm" control={control} render={({field, fieldState, formState}) => (
+                            <Field data-invalid={fieldState.invalid}>
+                                <FieldLabel htmlFor="confirm">Confirm Password</FieldLabel>
+                                <Input
+                                    type="password"
+                                    id="confirm"
+                                    placeholder="password"
+                                    {...field}
+                                    aria-invalid={fieldState.invalid}
+                                />
+                                { fieldState.invalid && <FieldError errors={[fieldState.error]}/>}
+                            </Field>
+                        )}/>
                         <Field orientation="horizontal" className="w-full">
-                            <Button onClick={() => {
-                                reset(defaultValues)
-                            }} variant="outline" type="reset" form="loginForm">Reset</Button>
-                            <Button type="submit" form="loginForm">Save</Button>
+                            <Button onClick={() => reset(defaultValues)} variant="outline" type="reset" form="registerForm">Reset</Button>
+                            <Button type="submit" form="registerForm">Save</Button>
                         </Field>
                     </FieldGroup>
                 </FieldSet>
-                <Link href="/register">
-                    <p className="underline font-bold">Sign Up</p>
-                </Link>
             </form>
         </div>
     )
