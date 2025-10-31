@@ -7,6 +7,7 @@ export default function Home() {
       <main className="flex w-full h-screen justify-center gap-2 bg-white sm:items-start">
        <p className="text-black">BAE Showcase App</p>
           <Button><Link href="/login">Login</Link></Button>
+          <Button><Link href="/dashboard">Dashboard</Link></Button>
       </main>
     </div>
   );

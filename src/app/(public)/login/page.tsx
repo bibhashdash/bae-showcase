@@ -19,7 +19,7 @@ export default function LoginPage({}) {
         mode: "onSubmit",
         defaultValues,
     })
-    const onSubmit = (data: zod.infer<typeof loginSchema>) => {
+    const onSubmit = async (data: zod.infer<typeof loginSchema>) => {
         console.log(data)
         reset(defaultValues)
     }
@@ -30,7 +30,7 @@ export default function LoginPage({}) {
                     <FieldTitle>Login</FieldTitle>
                     <FieldDescription>Enjoy the best of this journaling app</FieldDescription>
                     <FieldGroup>
-                        <Controller name="email" control={control} render={({field, fieldState, formState}) => (
+                        <Controller name="email" control={control} render={({field, fieldState}) => (
                             <Field data-invalid={fieldState.invalid}>
                                 <FieldLabel htmlFor="email">Email</FieldLabel>
                                 <Input
@@ -43,7 +43,7 @@ export default function LoginPage({}) {
                                 {fieldState.invalid && <FieldError errors={[fieldState.error]}/>}
                             </Field>
                         )}/>
-                        <Controller name="password" control={control} render={({field, fieldState, formState}) => (
+                        <Controller name="password" control={control} render={({field, fieldState}) => (
                             <Field data-invalid={fieldState.invalid}>
                                 <FieldLabel htmlFor="password">Password</FieldLabel>
                                 <Input
