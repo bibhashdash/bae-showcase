@@ -6,7 +6,7 @@ export function cn(...inputs: ClassValue[]) {
   return twMerge(clsx(inputs))
 }
 
-export const loginSchema = z.object({
+export const LoginSchema = z.object({
     email: z.email({error: "Invalid email format"}),
     password: z.string().refine((val) =>
             /[A-Za-z]/.test(val) && /\d/.test(val) && /[^A-Za-z0-9]/.test(val),
@@ -14,7 +14,7 @@ export const loginSchema = z.object({
     ),
 })
 
-export const registerSchema = z.object({
+export const RegisterSchema = z.object({
     email: z.email({error: "Invalid email format"}),
     password: z.string().min(8).refine((val) =>
             /[A-Za-z]/.test(val) && /\d/.test(val) && /[^A-Za-z0-9]/.test(val),
@@ -25,7 +25,7 @@ export const registerSchema = z.object({
     error: "Passwords do not match", path: ["confirm"]
 })
 
-export const journalEntrySchema = z.object({
+export const JournalEntrySchema = z.object({
     title: z.string().min(1),
     date: z.iso.datetime(),
     tags: z.array(z.string()).default(["unknown"]).optional(),

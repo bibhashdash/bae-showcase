@@ -4,22 +4,22 @@ import {Controller, useForm} from "react-hook-form";
 import {Input} from "@/components/ui/input";
 import {Button} from "@/components/ui/button";
 import * as zod from "zod";
-import {registerSchema} from "@/lib/utils";
+import {RegisterSchema} from "@/lib/utils";
 import {zodResolver} from "@hookform/resolvers/zod";
 
-const defaultValues: zod.infer<typeof registerSchema> = {
+const defaultValues: zod.infer<typeof RegisterSchema> = {
     email: "",
     password: "",
     confirm: ""
 }
 
 export default function RegisterPage (){
-    const {control, handleSubmit, reset} = useForm<zod.infer<typeof registerSchema>>({
-        resolver: zodResolver(registerSchema),
+    const {control, handleSubmit, reset} = useForm<zod.infer<typeof RegisterSchema>>({
+        resolver: zodResolver(RegisterSchema),
         mode: "onSubmit",
         defaultValues: defaultValues,
     })
-    const onSubmit = (data: zod.infer<typeof registerSchema>) => {
+    const onSubmit = (data: zod.infer<typeof RegisterSchema>) => {
         console.log(data)
         reset(defaultValues)
     }
@@ -30,7 +30,7 @@ export default function RegisterPage (){
                     <FieldTitle>Sign Up</FieldTitle>
                     <FieldDescription>Enjoy the best of this journaling app</FieldDescription>
                     <FieldGroup>
-                        <Controller name="email" control={control} render={({field, fieldState, formState}) => (
+                        <Controller name="email" control={control} render={({field, fieldState}) => (
                             <Field data-invalid={fieldState.invalid}>
                                 <FieldLabel htmlFor="email">Email</FieldLabel>
                                 <Input
@@ -43,7 +43,7 @@ export default function RegisterPage (){
                                 {fieldState.invalid && <FieldError errors={[fieldState.error]}/>}
                             </Field>
                         )}/>
-                        <Controller name="password" control={control} render={({field, fieldState, formState}) => (
+                        <Controller name="password" control={control} render={({field, fieldState}) => (
                             <Field data-invalid={fieldState.invalid}>
                                 <FieldLabel htmlFor="password">Password</FieldLabel>
                                 <Input
@@ -56,7 +56,7 @@ export default function RegisterPage (){
                                 {fieldState.invalid && <FieldError errors={[fieldState.error]}/>}
                             </Field>
                         )}/>
-                        <Controller name="confirm" control={control} render={({field, fieldState, formState}) => (
+                        <Controller name="confirm" control={control} render={({field, fieldState}) => (
                             <Field data-invalid={fieldState.invalid}>
                                 <FieldLabel htmlFor="confirm">Confirm Password</FieldLabel>
                                 <Input
