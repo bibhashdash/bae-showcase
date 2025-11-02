@@ -6,6 +6,7 @@ import {Button} from "@/components/ui/button";
 import * as zod from "zod";
 import {RegisterSchema} from "@/lib/utils";
 import {zodResolver} from "@hookform/resolvers/zod";
+import {signup} from "@/app/lib/actions";
 
 const defaultValues: zod.infer<typeof RegisterSchema> = {
     email: "",
@@ -19,8 +20,9 @@ export default function RegisterPage (){
         mode: "onSubmit",
         defaultValues: defaultValues,
     })
-    const onSubmit = (data: zod.infer<typeof RegisterSchema>) => {
-        console.log(data)
+    const onSubmit = async (data: zod.infer<typeof RegisterSchema>) => {
+        const result = await signup(data)
+        console.log(result)
         reset(defaultValues)
     }
     return (
@@ -71,7 +73,7 @@ export default function RegisterPage (){
                         )}/>
                         <Field orientation="horizontal" className="w-full">
                             <Button onClick={() => reset(defaultValues)} variant="outline" type="reset" form="registerForm">Reset</Button>
-                            <Button type="submit" form="registerForm">Save</Button>
+                            <Button type="submit" form="registerForm">Register</Button>
                         </Field>
                     </FieldGroup>
                 </FieldSet>

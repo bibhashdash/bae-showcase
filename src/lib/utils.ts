@@ -5,7 +5,12 @@ import { twMerge } from "tailwind-merge"
 export function cn(...inputs: ClassValue[]) {
   return twMerge(clsx(inputs))
 }
-
+export interface User {
+    id: string,
+    userName?: string,
+    bio?: string,
+    fullName?: string,
+}
 export const LoginSchema = z.object({
     email: z.email({error: "Invalid email format"}),
     password: z.string().refine((val) =>
