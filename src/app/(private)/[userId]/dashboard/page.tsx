@@ -8,9 +8,7 @@ import {User} from "@/lib/utils"
 export default function Dashboard() {
     const supabase = createClient();
     const {userId} = useParams()
-    // const [user, setUser] = useState<User | null>({id: null, userName: null});
-    const [userName, setUserName] = useState<string>("");
-    const [bio, setBio] = useState<string>("");
+    const [user, setUser] = useState<User | null>(null);
     const [loading, setLoading] = useState(true)
 
     const getProfile = useCallback(async () => {
@@ -18,22 +16,17 @@ export default function Dashboard() {
             setLoading(true)
             const { data, error, status } = await supabase
                 .from('profiles')
-                .select(`fullName: full_name, username, bio, userId: user_id`)
+                .select(`id: user_id, username: username, fullName: full_name, bio: bio`)
                 .eq('user_id', userId)
                 .single()
+                .overrideTypes<User | null>();
             if (error && status !== 406) {
                 console.log(error)
                 setLoading(false)
                 throw error
             }
-            if (data && data.userId) {
-                // setFullname(data.full_name)
-                // setUsername(data.username)
-                // setWebsite(data.website)
-                // setAvatarUrl(data.avatar_url)
-                // setUser(data)
-                setUserName(data.username)
-                setBio(data.bio)
+            if (data) {
+                setUser(data)
                 setLoading(false)
                 // console.log(data)
             }
@@ -49,10 +42,9 @@ export default function Dashboard() {
             getProfile()
         }
     }, [userId, getProfile])
-
-    return <>
-        <p>{userName}</p>
-        <p>{bio}</p>
-        {/*{entries && entries.length > 0 && (<p>{entries[0].entryText}</p>)}*/}
-    </>
+    if (!user) return null;
+    return <div>
+        <p>{user.username}</p>
+        <p>{user.bio}</p>
+    </div>
 }

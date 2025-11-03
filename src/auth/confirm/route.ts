@@ -18,12 +18,13 @@ export async function GET(request: NextRequest) {
     if (token_hash && type) {
         const supabase = await createClient()
 
-        const { error } = await supabase.auth.verifyOtp({
+        const { error, data } = await supabase.auth.verifyOtp({
             type,
             token_hash,
         })
-        if (!error) {
+        if (!error && data.user && data.user.id) {
             redirectTo.searchParams.delete('next')
+            redirectTo.pathname = `/${data.user.id}/dashboard`
             return NextResponse.redirect(redirectTo)
         }
     }

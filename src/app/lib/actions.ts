@@ -6,8 +6,6 @@ import { redirect } from 'next/navigation'
 
 import { revalidatePath } from 'next/cache'
 
-import { v4 as uuidv4 } from 'uuid';
-
 export async function login (formData: unknown) {
     const supabase = await createClient()
     const result = LoginSchema.safeParse(formData);
@@ -15,13 +13,9 @@ export async function login (formData: unknown) {
         return z.treeifyError(result.error);
     }
     const { error, data } = await supabase.auth.signInWithPassword({email: result.data.email, password: result.data.password});
-    // const { email, password } = result.data;
     if (error) {
         console.log(error);
         redirect('/error')
-    }
-    else {
-        if (data) console.log(data)
     }
     revalidatePath('/', 'layout')
     redirect(`/${data.user?.id}/dashboard`)

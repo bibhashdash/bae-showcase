@@ -7,9 +7,9 @@ export function cn(...inputs: ClassValue[]) {
 }
 export interface User {
     id: string,
-    userName?: string,
-    bio?: string,
-    fullName?: string,
+    username: string,
+    bio: string,
+    fullName: string,
 }
 export const LoginSchema = z.object({
     email: z.email({error: "Invalid email format"}),
