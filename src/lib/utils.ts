@@ -6,10 +6,14 @@ export function cn(...inputs: ClassValue[]) {
   return twMerge(clsx(inputs))
 }
 export interface User {
-    id: string,
+    userId: string,
     username: string,
     bio: string,
     fullName: string,
+}
+export interface Error {
+    isError: boolean,
+    errorMessage: string,
 }
 export const LoginSchema = z.object({
     email: z.email({error: "Invalid email format"}),
