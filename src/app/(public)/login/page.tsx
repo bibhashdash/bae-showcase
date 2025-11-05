@@ -3,7 +3,8 @@ import {Controller, SubmitHandler, useForm} from "react-hook-form";
 import {zodResolver} from "@hookform/resolvers/zod";
 import * as zod from "zod";
 import {LoginSchema} from "@/lib/utils";
-import {Field, FieldDescription, FieldError, FieldGroup, FieldLabel, FieldSet, FieldTitle} from "@/components/ui/field";
+import {Card, CardContent, CardHeader, CardTitle,} from "@/components/ui/card"
+import {Field, FieldDescription, FieldError, FieldGroup, FieldLabel} from "@/components/ui/field";
 import {Input} from "@/components/ui/input";
 import {Button} from "@/components/ui/button"
 import Link from "next/link";
@@ -23,69 +24,61 @@ export default function LoginPage({}) {
     })
 
     const onSubmit: SubmitHandler<zod.infer<typeof LoginSchema>> = async (data) => {
-        console.log(data)
-        const result = await login(data)
-        console.log(result)
-        // reset(defaultValues)
+        await login(data)
     }
 
     return (
-        <div className="flex justify-center items-center gap-2 h-full w-full">
-            <form onSubmit={handleSubmit(onSubmit)} name="login-form">
-                <FieldSet>
-                    <FieldTitle>Login</FieldTitle>
-                    <FieldDescription>Enjoy the best of this journaling app</FieldDescription>
-                    <FieldGroup>
-                        <Controller name="email" control={control} render={({field, fieldState}) => (
-                            <Field data-invalid={fieldState.invalid}>
-                                <FieldLabel htmlFor="email">Email</FieldLabel>
-                                <Input
-                                    {...field}
-                                    aria-invalid={fieldState.invalid}
-                                    id="email"
-                                    placeholder="Enter your email"
-                                    autoComplete="email"
-                                />
-                                {fieldState.invalid && <FieldError errors={[fieldState.error]}/>}
-                            </Field>
-                        )}/>
-                        <Controller name="password" control={control} render={({field, fieldState}) => (
-                            <Field data-invalid={fieldState.invalid}>
-                                <FieldLabel htmlFor="password">Password</FieldLabel>
-                                <Input
-                                    type="password"
-                                    id="password"
-                                    placeholder="password"
-                                    {...field}
-                                    aria-invalid={fieldState.invalid}
-                                />
-                                {fieldState.invalid && <FieldError errors={[fieldState.error]}/>}
-                            </Field>
-                        )}/>
-                        <Field orientation="horizontal" className="w-full">
-                            <Button onClick={() => {
-                                reset(defaultValues)
-                            }} variant="outline" type="reset" form="loginForm">Reset</Button>
-                            <button type="submit">
-                                Login
-                            </button>
-                        </Field>
-                    </FieldGroup>
-                </FieldSet>
-                <Link href="/register">
-                    <p className="underline font-bold">Sign Up</p>
-                </Link>
-            </form>
+        <div className="flex min-h-screen justify-center items-center gap-2 h-full">
+            <div className="w-full max-w-sm">
+                <Card className="w-full">
+                    <CardHeader>
+                        <CardTitle>Login to your account</CardTitle>
+                    </CardHeader>
+                    <CardContent>
+                        <form className="" onSubmit={handleSubmit(onSubmit)} name="login-form">
+                            <FieldGroup>
+                                <Controller name="email" control={control} render={({field, fieldState}) => (
+                                    <Field data-invalid={fieldState.invalid}>
+                                        <FieldLabel htmlFor="email">Email</FieldLabel>
+                                        <Input
+                                            {...field}
+                                            aria-invalid={fieldState.invalid}
+                                            id="email"
+                                            placeholder="Enter your email"
+                                            autoComplete="email"
+                                        />
+                                        {fieldState.invalid && <FieldError errors={[fieldState.error]}/>}
+                                    </Field>
+                                )}/>
+                                <Controller name="password" control={control} render={({field, fieldState}) => (
+                                    <Field data-invalid={fieldState.invalid}>
+                                        <FieldLabel htmlFor="password">Password</FieldLabel>
+                                        <Input
+                                            type="password"
+                                            id="password"
+                                            placeholder="password"
+                                            {...field}
+                                            aria-invalid={fieldState.invalid}
+                                        />
+                                        {fieldState.invalid && <FieldError errors={[fieldState.error]}/>}
+                                    </Field>
+                                )}/>
+                                <Field className="w-full">
+                                    <Button className="cursor-pointer" onClick={() => {
+                                        reset(defaultValues)
+                                    }} variant="outline" type="reset" form="loginForm">Reset</Button>
+                                    <Button className="cursor-pointer" type="submit">
+                                        Login
+                                    </Button>
+                                    <FieldDescription className="text-center">
+                                        Don&apos;t have an account? <Link href="/register">Sign up</Link>
+                                    </FieldDescription>
+                                </Field>
+                            </FieldGroup>
+                        </form>
+                    </CardContent>
+                </Card>
+            </div>
         </div>
     )
 }
-//
-// function SubmitButton() {
-//     const {pending} = useFormStatus();
-//
-//     return (
-//         <button disabled={pending} type="submit">
-//             Login
-//         </button>
-//     );
-// }
