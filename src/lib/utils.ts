@@ -5,12 +5,12 @@ import { twMerge } from "tailwind-merge"
 export function cn(...inputs: ClassValue[]) {
   return twMerge(clsx(inputs))
 }
-export interface User {
-    userId: string,
-    username: string,
-    bio: string,
-    fullName: string,
-}
+export const User = z.object({
+    userId: z.string(),
+    username: z.string().min(1, {error: "Cannot be blank"}),
+    bio: z.string(),
+    fullName: z.string({error: "name cannot be blank"}),
+})
 export interface Error {
     isError: boolean,
     errorMessage: string,

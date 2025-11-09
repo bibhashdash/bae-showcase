@@ -62,9 +62,6 @@ export default function LoginPage({}) {
                             </Field>
                         )}/>
                         <Field className="w-full">
-                            <Button className="cursor-pointer" onClick={() => {
-                                reset(defaultValues)
-                            }} variant="outline" type="reset" form="loginForm">Reset</Button>
                             <Button className="cursor-pointer" type="submit">
                                 Login
                             </Button>

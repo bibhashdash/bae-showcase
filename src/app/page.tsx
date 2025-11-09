@@ -1,15 +1,13 @@
 import {Button} from "@/components/ui/button";
 import Link from "next/link";
+import {createClient} from "@/lib/supabase/server";
+import {redirect} from "next/navigation";
 
-export default function Home() {
-  return (
-    <div className="flex min-h-screen items-center justify-center bg-zinc-50 font-sans">
-      <main className="flex w-full h-screen justify-center gap-2 bg-white sm:items-start">
-       <p className="text-black">BAE Showcase App</p>
-          <Button><Link href="/login">Login</Link></Button>
-          <Button><Link href="/register">Register</Link></Button>
-          <Button><Link href="/dashboard">Dashboard</Link></Button>
-      </main>
-    </div>
-  );
+export default async function Home() {
+    const supabase = await createClient()
+    const { data, error } = await supabase.auth.getUser()
+    if (error || !data?.user) {
+        redirect('/login')
+    }
+    else redirect(`/${data.user.id}/dashboard`)
 }

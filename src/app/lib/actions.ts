@@ -44,19 +44,3 @@ export async function logout () {
     revalidatePath('/', 'layout')
     redirect("/login")
 }
-
-// export async function getAuthenticatedUser(): Promise<User | null> {
-//     const cookieStore = cookies();
-//     const supabase = createServerClient(process.env.NEXT_PUBLIC_SUPABASE_URL!,
-//         process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!, cookieStore);
-//
-//     // This is the single source of truth for the authenticated user.
-//     const { data: userData, error } = await supabase.auth.getUser();
-//
-//     if (error) {
-//         console.error("Auth Error in server utility:", error.message);
-//         return null;
-//     }
-//
-//     return userData.user;
-// }

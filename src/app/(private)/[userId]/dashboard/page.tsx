@@ -12,10 +12,10 @@ export default async function Dashboard() {
     }
 
     return <div>
-        <Button onClick={logout}>Logout</Button>
-        <Button>
-            <Link href={`/${data.user.id}/profile`}>Profile</Link>
-        </Button>
+        {/*<Button onClick={logout}>Logout</Button>*/}
+        {/*<Button>*/}
+        {/*    <Link href={`/${data.user.id}/profile`}>Profile</Link>*/}
+        {/*</Button>*/}
         <Entries id={data.user.id} />
     </div>
 }
