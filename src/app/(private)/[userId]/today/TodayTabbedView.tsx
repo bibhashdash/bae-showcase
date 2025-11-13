@@ -4,7 +4,11 @@ import {MicroTask, Task} from "@/lib/utils";
 import {TabContent} from "@/app/(private)/[userId]/today/tabContent";
 import {useState} from "react";
 import {v4 as uuid} from "uuid";
+import {Dialog} from "@/components/ui/dialog";
 export const TodayTabbedView = ({userId}: {userId: string}) => {
+    const [taskForm, setTaskForm] = useState<Task>();
+    const [microTaskForm, setMicroTaskForm] = useState<Task>();
+
     const [tasks, setTasks] = useState<Array<Task>>([
         {
             userId: "1",
@@ -40,6 +44,7 @@ export const TodayTabbedView = ({userId}: {userId: string}) => {
             <TabsContent value="subTasks">
                 <TabContent tabName="Sub Tasks" taskDataItems={microTasks} />
             </TabsContent>
+
         </Tabs>
     )
 }
