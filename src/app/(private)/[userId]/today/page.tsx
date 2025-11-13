@@ -1,8 +1,7 @@
 import {createClient} from "@/lib/supabase/server";
 import {redirect} from "next/navigation";
 import {Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle} from "@/components/ui/card";
-import {UserProfileForm} from "@/components/ui/userProfileForm";
-import {TodaySummaryCards} from "@/app/(private)/[userId]/today/todaySummaryCards";
+import {TodayTabbedView} from "@/app/(private)/[userId]/today/TodayTabbedView"
 
 export default async function Today() {
     const supabase = await createClient()
@@ -22,7 +21,7 @@ export default async function Today() {
                 </CardDescription>
             </CardHeader>
             <CardContent>
-                <TodaySummaryCards userId={data.user.id} />
+                <TodayTabbedView userId={data.user.id} />
             </CardContent>
             <CardFooter>
 
