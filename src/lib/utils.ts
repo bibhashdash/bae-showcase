@@ -40,3 +40,45 @@ export const JournalEntrySchema = z.object({
     tags: z.array(z.string()).default(["unknown"]).optional(),
     text: z.string().min(1),
 })
+
+
+// When I log in to work
+// I have separate projects I am working on per my harvest
+// each day I work on a todo list of tasks
+// each task is related to a project (each project can be a tag?)
+// thereby if I have a task that spans multiple projects, I can add multiple tags
+// each task should consist of some standard columns/fields
+// Name, git branch name, brief description
+// each task also has a todo list of items - just strings will do with the usual mark as done etc CRUD ops
+
+export interface Project {
+    id: string,
+    title: string,
+    tasks?: Array<string>, // array of Task ids
+    userId: string,
+    isComplete: boolean,
+    isActive: boolean,
+}
+
+export interface Task {
+    id: string
+    title: string
+    description: string
+    branchName?: string
+    microTasks?: Array<string>, // array of related micro task ids
+    isComplete: boolean,
+    isActive: boolean,
+    tags?: Array<string>, // array of project ids
+    userId: string
+}
+
+export interface MicroTask {
+    id: string
+    title: string
+    description: string,
+    isComplete: boolean,
+    isActive: boolean,
+    taskId: string,
+    userId: string
+}
+

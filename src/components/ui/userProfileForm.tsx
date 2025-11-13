@@ -7,7 +7,7 @@ import {User} from "@/lib/utils";
 import {zodResolver} from "@hookform/resolvers/zod";
 import {Input} from "@/components/ui/input";
 import {useEffect} from "react";
-import {getUserProfile, updateUserProfile} from "@/lib/supabase/api";
+import {getUserProfile} from "@/lib/supabase/api";
 import {Check} from 'lucide-react'
 
 export const UserProfileForm = ({userId}: {userId: string}) => {
@@ -30,7 +30,7 @@ export const UserProfileForm = ({userId}: {userId: string}) => {
     }, [reset, userId]);
 
     const onSubmit: SubmitHandler<zod.infer<typeof User>> = async (data, event) => {
-        await updateUserProfile(data)
+        // await updateUserProfile(data)
         // event?.preventDefault()
         console.log(data)
     }
