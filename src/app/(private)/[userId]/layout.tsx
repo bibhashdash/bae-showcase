@@ -24,7 +24,7 @@ export default async function Layout({children}: { children: ReactNode }) {
                     <SidebarTrigger className="ml-1"><Menu /></SidebarTrigger>
                     Hello this is the title section of each nav item
                 </header>
-                <div className="p-3">
+                <div className="p-3 w-full">
                     {children}
                 </div>
             </main>

@@ -11,7 +11,7 @@ export default async function Today() {
     }
 
     return (
-        <Card>
+        <Card className="h-[80vh]">
             <CardHeader>
                 <CardTitle>
                     Welcome to today!
@@ -20,7 +20,7 @@ export default async function Today() {
                     It&#39;s going to be awesome
                 </CardDescription>
             </CardHeader>
-            <CardContent>
+            <CardContent className="">
                 <TodayTabbedView userId={data.user.id} />
             </CardContent>
             <CardFooter>

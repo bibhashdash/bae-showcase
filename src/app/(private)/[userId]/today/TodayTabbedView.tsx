@@ -1,21 +1,44 @@
-import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
+"use client"
+import {Tabs, TabsContent, TabsList, TabsTrigger} from "@/components/ui/tabs"
 import {MicroTask, Task} from "@/lib/utils";
-
-const tasks: Array<Task> = []
-const microTasks: Array<MicroTask> = []
-
+import {TabContent} from "@/app/(private)/[userId]/today/tabContent";
+import {useState} from "react";
+import {v4 as uuid} from "uuid";
 export const TodayTabbedView = ({userId}: {userId: string}) => {
+    const [tasks, setTasks] = useState<Array<Task>>([
+        {
+            userId: "1",
+            branchName: "new bracnh",
+            description: "this is a sample big task description",
+            id: "task-number-one",
+            isActive: true,
+            isComplete: false,
+            title: "Task number one"
+
+        }
+    ])
+    const [microTasks, setMicroTasks] = useState<Array<MicroTask>>([
+        {
+            userId: "1",
+            description: "Sample micro task description",
+            isActive: true,
+            isComplete: false,
+            title: "Micro task number one",
+            id: uuid(),
+            taskId: "task-number-one"
+        }
+    ])
     return (
-        <Tabs defaultValue="tasks" className="w-[400px]">
+        <Tabs defaultValue="tasks" className="w-full h-full">
             <TabsList>
                 <TabsTrigger value="tasks">Tasks</TabsTrigger>
                 <TabsTrigger value="subTasks">Sub-Tasks</TabsTrigger>
             </TabsList>
-            <TabsContent value="tasks">
-                View all your big tasks here.
+            <TabsContent className="h-full" value="tasks">
+                <TabContent tabName="Tasks" taskDataItems={tasks} />
             </TabsContent>
             <TabsContent value="subTasks">
-                View all your micro tasks here.
+                <TabContent tabName="Sub Tasks" taskDataItems={microTasks} />
             </TabsContent>
         </Tabs>
     )
