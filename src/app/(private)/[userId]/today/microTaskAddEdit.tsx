@@ -4,21 +4,21 @@ import {Input} from "@/components/ui/input";
 import {useState} from "react";
 import {Textarea} from "@/components/ui/textarea";
 import {Button} from "@/components/ui/button";
-export const TaskAddEdit = () => {
-    // export interface Task {
-    //     id: string
-    //     title: string
-    //     description: string
-    //     branchName?: string
-    //     microTasks?: Array<string>, // array of related micro task ids
-    //     isComplete: boolean,
-    //     isActive: boolean,
-    //     tags?: Array<string>, // array of project ids
-    //     userId: string
-    // }
+
+// export interface MicroTask {
+//     id: string
+//     title: string
+//     description: string,
+//     isComplete: boolean,
+//     isActive: boolean,
+//     taskId: string,
+//     userId: string
+// }
+
+export const MicroTaskAddEdit = () => {
     const [title, setTitle] = useState("");
     const [description, setDescription] = useState("");
-    const [branch, setBranch] = useState("");
+    const [taskId, setTaskId] = useState("");
 
     return (
         <FieldGroup className="w-full">
@@ -29,13 +29,7 @@ export const TaskAddEdit = () => {
                     placeholder="Enter your task name"
                 />
             </Field>
-            <Field>
-                <FieldLabel htmlFor="branch">Branch Name</FieldLabel>
-                <Input
-                    id="branch"
-                    placeholder="Enter your branch name"
-                />
-            </Field>
+
             <Field>
                 <FieldLabel htmlFor="description">Description</FieldLabel>
                 <Textarea

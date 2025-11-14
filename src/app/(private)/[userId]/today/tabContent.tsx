@@ -15,6 +15,7 @@ import {Field, FieldError, FieldGroup, FieldLabel} from "@/components/ui/field";
 import {Input} from "@/components/ui/input";
 import {TaskAddEdit} from "@/app/(private)/[userId]/today/taskAddEdit";
 import {Button} from "@/components/ui/button";
+import {MicroTaskAddEdit} from "@/app/(private)/[userId]/today/microTaskAddEdit";
 
 export const TabContent = (
     {tabName, taskDataItems}: {tabName: string, taskDataItems: Array<Task> | Array<MicroTask>}
@@ -32,11 +33,7 @@ export const TabContent = (
                        <DialogHeader><DialogTitle>Add to your {tabName}</DialogTitle></DialogHeader>
                        <form>
                            { tabName === "Tasks" && <TaskAddEdit /> }
-                           {/*{*/}
-                           {/*    tabName === "Sub Tasks" && (*/}
-
-                           {/*    )*/}
-                           {/*}*/}
+                           {tabName === "Sub Tasks" && <MicroTaskAddEdit />}
                        </form>
                        <DialogFooter>
                            <DialogClose asChild>
