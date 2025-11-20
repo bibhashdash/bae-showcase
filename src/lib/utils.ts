@@ -69,7 +69,9 @@ export interface Task {
     isComplete: boolean,
     isActive: boolean,
     tags?: Array<string>, // array of project ids
-    userId: string
+    userId: string,
+    deadline?: Date,
+    assignedTo?: Array<string>,
 }
 
 export interface MicroTask {
