@@ -16,7 +16,7 @@ export const TaskDetails = ({task}: { task: Task | null }) => {
                     size="16"/></div>
                 {
                     task && task.assignedTo && task.assignedTo.length > 0 &&
-                    task?.assignedTo?.map((item) => <Badge>{item}</Badge>)
+                    task?.assignedTo?.map((item) => <Badge key={item}>{item}</Badge>)
                 }
             </div>
             <div className="flex gap-2 items-center">

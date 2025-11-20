@@ -1,27 +1,16 @@
 "use client"
-import {ArrowRight, CalendarIcon, EllipsisVertical, ListTodo, MenuIcon, UsersIcon} from "lucide-react";
+import {MenuIcon, X} from "lucide-react";
 import {Item, ItemActions, ItemContent} from "@/components/ui/item";
-import { Badge } from "@/components/ui/badge"
 import {v4 as uuid} from "uuid";
-import dayjs from 'dayjs'
 import {
     DropdownMenu,
     DropdownMenuContent,
     DropdownMenuItem,
-    DropdownMenuLabel,
     DropdownMenuSeparator,
     DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu"
-import {
-    Drawer,
-    DrawerContent,
-    DrawerDescription,
-    DrawerFooter,
-    DrawerHeader,
-    DrawerTitle,
-} from "@/components/ui/drawer"
+import {Drawer, DrawerContent, DrawerHeader, DrawerTitle,} from "@/components/ui/drawer"
 import {useState} from "react";
-import {Button} from "@/components/ui/button";
 import {Task} from "@/lib/utils";
 import {TaskDetails} from "@/app/(private)/[userId]/today/taskDetails";
 
@@ -41,7 +30,12 @@ const defaultTasks: Array<Task> = [
 export const TodayTreeView = ({userId}: { userId: string }) => {
     const [tasks, setTasks] = useState<Array<Task>>(defaultTasks);
     const [drawerContent, setDrawerContent] = useState<Task | null>(null);
-
+    const [inEditMode, setInEditMode] = useState<boolean>(false);
+    console.log(userId)
+    const closeDrawer = () => {
+        setInEditMode(false);
+        setDrawerContent(null);
+    }
     return (
         <div className="w-full">
             {
@@ -61,7 +55,7 @@ export const TodayTreeView = ({userId}: { userId: string }) => {
                                     </DropdownMenuTrigger>
                                     <DropdownMenuContent align="end">
                                         <DropdownMenuItem className="cursor-pointer hover:bg-gray-200">Mark Complete</DropdownMenuItem>
-                                        <DropdownMenuItem className="cursor-pointer hover:bg-gray-200">Edit</DropdownMenuItem>
+                                        <DropdownMenuItem onClick={() => setInEditMode(true)} className="cursor-pointer hover:bg-gray-200">Edit</DropdownMenuItem>
                                         <DropdownMenuSeparator />
                                         <DropdownMenuItem className="cursor-pointer hover:bg-gray-200">Delete</DropdownMenuItem>
                                     </DropdownMenuContent>
@@ -70,19 +64,18 @@ export const TodayTreeView = ({userId}: { userId: string }) => {
                         </Item>
                 )
             }
-            <Drawer direction="right" open={drawerContent !== null} onClose={() => setDrawerContent(null)}>
+            <Drawer direction="right" open={drawerContent !== null} onClose={closeDrawer}>
                 <DrawerContent>
                     <DrawerHeader>
-                        <DrawerTitle className="text-2xl">{drawerContent?.title}</DrawerTitle>
+                        <div className="flex justify-between items-center">
+                            <DrawerTitle className="text-2xl">{inEditMode && <>Editing - </>}{drawerContent?.title}</DrawerTitle>
+                            <X className="cursor-pointer" onClick={closeDrawer} />
+                        </div>
                     </DrawerHeader>
                     <div className="p-4">
                         {drawerContent?.description}
                         <TaskDetails task={drawerContent} />
                     </div>
-                    <DrawerFooter>
-                        <Button type="button" onClick={() => setDrawerContent(null)}>Submit</Button>
-                        <Button type="button" variant="outline" onClick={() => setDrawerContent(null)}>Cancel</Button>
-                    </DrawerFooter>
                 </DrawerContent>
             </Drawer>
         </div>

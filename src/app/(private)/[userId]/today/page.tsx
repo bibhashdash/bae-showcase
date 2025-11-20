@@ -1,7 +1,6 @@
 import {createClient} from "@/lib/supabase/server";
 import {redirect} from "next/navigation";
-import {Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle} from "@/components/ui/card";
-import {TodayTabbedView} from "@/app/(private)/[userId]/today/TodayTabbedView"
+import {Card, CardContent, CardFooter, CardHeader, CardTitle} from "@/components/ui/card";
 import {Button} from "@/components/ui/button";
 import {CirclePlus} from "lucide-react";
 import {TodayTreeView} from "@/app/(private)/[userId]/today/todayTreeView";
@@ -22,7 +21,6 @@ export default async function Today() {
                 </CardTitle>
             </CardHeader>
             <CardContent className="">
-                {/*<TodayTabbedView userId={data.user.id} />*/}
                 <TodayTreeView userId={data.user.id} />
             </CardContent>
             <CardFooter>
