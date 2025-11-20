@@ -16,13 +16,8 @@ export default async function Today() {
     return (
         <Card className="h-[80vh]">
             <CardHeader className="border-b border-gray-100">
-                <CardTitle className="flex justify-between">
-                    <div className="flex flex-col gap-2">
-                        Welcome to today!
-                        <CardDescription>
-                            It&#39;s going to be awesome
-                        </CardDescription>
-                    </div>
+                <CardTitle className="flex justify-between items-center">
+                    Welcome to today!
                     <Button>Add Task <CirclePlus /></Button>
                 </CardTitle>
             </CardHeader>
