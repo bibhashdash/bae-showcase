@@ -13,19 +13,20 @@ export default async function Today() {
     }
 
     return (
-        <Card className="h-[80vh]">
-            <CardHeader className="border-b border-gray-100">
-                <CardTitle className="flex justify-between items-center">
-                    Welcome to today!
-                    <Button>Add Task <CirclePlus /></Button>
-                </CardTitle>
-            </CardHeader>
-            <CardContent className="">
-                <TodayTreeView userId={data.user.id} />
-            </CardContent>
-            <CardFooter>
+        <>
+            <Card className="h-[80vh]">
+                <CardHeader className="border-b border-gray-100">
+                    <CardTitle className="flex justify-between items-center">
+                        Welcome to today!
+                    </CardTitle>
+                </CardHeader>
+                <CardContent className="h-full">
+                    <TodayTreeView userId={data.user.id} />
+                </CardContent>
+                <CardFooter>
 
-            </CardFooter>
-        </Card>
+                </CardFooter>
+            </Card>
+        </>
     )
 }
