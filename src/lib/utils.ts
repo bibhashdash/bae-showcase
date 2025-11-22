@@ -64,11 +64,7 @@ export interface Task {
     id: string
     title: string
     description: string
-    branchName?: string
-    microTasks?: Array<string>, // array of related micro task ids
     isComplete: boolean,
-    isActive: boolean,
-    tags?: Array<string>, // array of project ids
     userId: string,
     deadline?: Date,
     assignedTo?: Array<string>,
