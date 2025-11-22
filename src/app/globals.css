@@ -37,6 +37,9 @@
   --color-popover: var(--popover);
   --color-card-foreground: var(--card-foreground);
   --color-card: var(--card);
+    --color-success: var(--success);
+    --color-warning: var(--warning);
+    --color-danger: var(--danger);
   --radius-sm: calc(var(--radius) - 4px);
   --radius-md: calc(var(--radius) - 2px);
   --radius-lg: var(--radius);
@@ -76,9 +79,9 @@
     --sidebar-accent-foreground: oklch(0.21 0.006 285.885);
     --sidebar-border: oklch(0.92 0.004 286.32);
     --sidebar-ring: oklch(0.712 0.194 13.428);
-    --success: oklch(0.617 0.206 141.637);
-    --danger: oklch(0.611 0.251 29.234);
-    --warning: oklch(0.733 0.185 53.406);
+    --success: oklch(0.698 0.236 142.178);
+    --warning: oklch(0.856 0.175 88.008);
+    --danger: oklch(0.639 0.246 27.924);
 }
 
 .dark {

@@ -44,9 +44,9 @@ export const TodayTreeView = ({userId}: { userId: string }) => {
 
     const onSubmit = (task: Task) => {
         if (inEditMode) {
-            updateUserTask(task, userId).then(() => getAllUserTasks(userId)).then(result => setTasks(result));
+            updateUserTask(task).then(() => getAllUserTasks(userId)).then(result => setTasks(result));
         } else if (inAddMode) {
-            addUserTask(task, userId).then(result => {
+            addUserTask(task).then(result => {
                 setTasks(prevTasks => [...prevTasks, result])
                 setShowDrawer(false);
             });

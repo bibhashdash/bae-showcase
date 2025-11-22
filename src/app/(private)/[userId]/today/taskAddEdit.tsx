@@ -30,7 +30,7 @@ export const TaskAddEdit = ({userId, taskId, task, userFriends, onCancelAction, 
     const [openDatePicker, setOpenDatePicker] = useState<boolean>(false);
 
     const handleCheckChange = (element: string, checked: boolean) => {
-        const index = assignedTo.indexOf(element);
+        const index = assignedTo?.indexOf(element);
         const isCurrentlyPresent = index !== -1;
         if (checked) {
             if (isCurrentlyPresent) {

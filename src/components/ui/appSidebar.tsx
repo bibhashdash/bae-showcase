@@ -1,6 +1,6 @@
 import {
     Sidebar,
-    SidebarContent,
+    SidebarContent, SidebarFooter,
     SidebarGroup,
     SidebarGroupContent,
     SidebarGroupLabel,
@@ -8,6 +8,11 @@ import {
     SidebarMenu, SidebarMenuButton,
     SidebarMenuItem,
 } from "@/components/ui/sidebar"
+import {
+    Avatar,
+    AvatarFallback,
+    AvatarImage,
+} from "@/components/ui/avatar"
 import {Separator} from "@/components/ui/separator"
 
 import {
@@ -18,63 +23,53 @@ import {
     CirclePlus,
     CircleUser,
     Home,
-    ClipboardList
+    ClipboardList, SettingsIcon
 } from "lucide-react";
 import Link from "next/link";
+import {AuthUser} from "@/app/(private)/[userId]/layout";
 
-export const AppSidebar = ({userId}: { userId: string }) => {
+export const AppSidebar = ({user}: { user: AuthUser }) => {
     return (
-        <Sidebar className="px-2 py-4">
+        <Sidebar variant="inset" collapsible="offcanvas" className="px-2 p-4">
             <SidebarHeader>
-                <div className="flex gap-2">
+                <div className="flex gap-2 p-4">
                     <Sticker/>
-                    DevZero
+                    <p className="font-bold">DevZero</p>
                 </div>
             </SidebarHeader>
-            <SidebarContent>
+            <SidebarContent className="p-4">
 
                 <SidebarGroup>
-                    {/*<SidebarGroupLabel className="font-bold">*/}
-                    {/*    My Stuff*/}
-                    {/*</SidebarGroupLabel>*/}
                     <SidebarGroupContent>
-                        <SidebarMenu className="flex flex-col gap-2">
-                            <Link href={`/${userId}/dashboard`}>
+                        <SidebarMenu className="flex flex-col gap-4">
+                            <Link href={`/${user.id}/dashboard`}>
                                 <SidebarMenuItem className="flex gap-2 items-center">
                                     <Home/>
                                     Dashboard
 
                                 </SidebarMenuItem>
                             </Link>
-                            <Link href={`/${userId}/today`}>
+                            <Link href={`/${user.id}/today`}>
                                 <SidebarMenuItem className="flex gap-2 items-center">
                                     <ClipboardList/>
                                     Today
                                 </SidebarMenuItem>
                             </Link>
-                            {/*<SidebarMenuItem className="flex gap-2 items-center">*/}
-                            {/*    <BanknoteArrowDown className="text-primary" />*/}
-                            {/*    Incomings*/}
-                            {/*</SidebarMenuItem>*/}
                         </SidebarMenu>
                     </SidebarGroupContent>
                 </SidebarGroup>
-                {/*<Separator className="my-4" />*/}
-                {/*<SidebarGroup>*/}
-                {/*    <SidebarGroupContent>*/}
-                {/*        <SidebarMenu>*/}
-                {/*            <SidebarMenuItem>*/}
-                {/*                <SidebarMenuButton>*/}
-                {/*                    <Link className="flex gap-2 items-center" href={`/${userId}/profile`}>*/}
-                {/*                        <CircleUser className="text-primary"/>*/}
-                {/*                        Profile</Link>*/}
-                {/*                </SidebarMenuButton>*/}
-
-                {/*            </SidebarMenuItem>*/}
-                {/*        </SidebarMenu>*/}
-                {/*    </SidebarGroupContent>*/}
-                {/*</SidebarGroup>*/}
             </SidebarContent>
+
+            <SidebarFooter className="p-2 w-full">
+                <SidebarMenu className="flex flex-col p-4 md:p-2 w-full">
+                    <SidebarMenuItem className="flex items-center justify-between w-full">
+                        <Avatar className="h-10 w-10 rounded-full bg-gray-500">
+                            <AvatarFallback className="rounded-lg">CN</AvatarFallback>
+                        </Avatar>
+                        <SettingsIcon />
+                    </SidebarMenuItem>
+                </SidebarMenu>
+            </SidebarFooter>
         </Sidebar>
     )
 }
