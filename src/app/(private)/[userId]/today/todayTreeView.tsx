@@ -67,11 +67,11 @@ export const TodayTreeView = ({userId}: { userId: string }) => {
     }
 
     const markComplete = (taskId: string) => {
-        markTaskCompletion(taskId, true).then(result => getAllUserTasks(userId)).then(result => setTasks(result));
+        markTaskCompletion(taskId, true).then(() => getAllUserTasks(userId)).then(result => setTasks(result));
     }
 
     const markInComplete = (taskId: string) => {
-        markTaskCompletion(taskId, false).then(result => getAllUserTasks(userId)).then(result => setTasks(result));
+        markTaskCompletion(taskId, false).then(() => getAllUserTasks(userId)).then(result => setTasks(result));
     }
 
     return (
@@ -145,7 +145,7 @@ export const TodayTreeView = ({userId}: { userId: string }) => {
                     )
                 }
             </div>
-            <Drawer direction="right" open={showDrawer} onClose={closeDrawer}>
+            <Drawer open={showDrawer} onClose={closeDrawer}>
                 <DrawerContent>
                     <DrawerHeader>
                         <div className="flex justify-between items-center">
