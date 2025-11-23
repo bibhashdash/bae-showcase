@@ -11,8 +11,8 @@ export default async function Layout({children}: {children: ReactNode}) {
 
     return (
 
-            <div className="flex min-h-screen justify-center items-center gap-2 h-full">
-                <div className="w-full max-w-sm">
+            <div className="flex min-h-[90vh] justify-center items-center gap-2 h-full">
+                <div className="w-full max-w-sm text-lg">
                     {children}
                 </div>
             </div>

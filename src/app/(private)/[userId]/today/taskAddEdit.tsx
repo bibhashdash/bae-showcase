@@ -102,7 +102,7 @@ export const TaskAddEdit = ({userId, taskId, task, onCancelAction, onSubmitActio
                 </FieldGroup>
             </div>
             <div className="flex gap-2 justify-end p-4">
-                <Button onClick={onCancelAction} className="cursor-pointer text-lg" variant="secondary">Cancel</Button>
+                <Button size={"lg"} onClick={onCancelAction} className="cursor-pointer text-lg" variant="secondary">Cancel</Button>
                 <Button onClick={() => onSubmitAction({
                     userId: userId,
                     id: taskId !== undefined ? taskId : uuid(),
@@ -111,7 +111,7 @@ export const TaskAddEdit = ({userId, taskId, task, onCancelAction, onSubmitActio
                     isComplete: isComplete,
                     title: title,
                     description: description,
-                })} className="cursor-pointer text-lg">Submit</Button>
+                })} className="cursor-pointer text-lg" size={"lg"}>Submit</Button>
             </div>
         </div>
     )

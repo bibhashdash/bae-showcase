@@ -18,7 +18,7 @@ export const SignOutButton = () => {
     return (
         <Dialog>
             <DialogTrigger asChild>
-                <Button variant={"secondary"} className="text-lg">Sign out<LogOutIcon size={16}/></Button>
+                <Button variant={"secondary"} size={"lg"} className="text-lg">Sign out<LogOutIcon size={16}/></Button>
             </DialogTrigger>
             <DialogContent className="text-lg">
                 <DialogHeader>
@@ -27,11 +27,11 @@ export const SignOutButton = () => {
                 <DialogFooter>
                     <div className="w-full flex gap-2 justify-center">
                         <DialogClose asChild>
-                            <Button type="button" variant="secondary" className="text-lg">
+                            <Button size={"lg"} type="button" variant="secondary" className="text-lg">
                                 Cancel
                             </Button>
                         </DialogClose>
-                        <Button className="text-lg" onClick={() => signOut().then(redirect("/login"))}>Confirm</Button>
+                        <Button size={"lg"} className="text-lg" onClick={() => signOut().then(redirect("/login"))}>Confirm</Button>
                     </div>
                 </DialogFooter>
             </DialogContent>

@@ -136,8 +136,8 @@ export const TodayTreeView = ({userId}: { userId: string }) => {
                                                 </DialogDescription>
                                             </DialogHeader>
                                             <DialogFooter>
-                                                <DialogClose asChild><Button variant="secondary" onClick={() => setDeleteId(null)}>Cancel</Button></DialogClose>
-                                                <Button onClick={() => handleDelete()} type="submit">Confirm</Button>
+                                                <DialogClose asChild><Button size={"lg"} variant="secondary" onClick={() => setDeleteId(null)}>Cancel</Button></DialogClose>
+                                                <Button size={"lg"} onClick={() => handleDelete()} type="submit">Confirm</Button>
                                             </DialogFooter>
                                         </DialogContent>
 

@@ -17,7 +17,7 @@ const defaultValues: zod.infer<typeof LoginSchema> = {
 
 export default function LoginPage({}) {
 
-    const {control, handleSubmit, reset} = useForm<zod.infer<typeof LoginSchema>>({
+    const {control, handleSubmit} = useForm<zod.infer<typeof LoginSchema>>({
         resolver: zodResolver(LoginSchema),
         mode: "onSubmit",
         defaultValues,
@@ -33,39 +33,41 @@ export default function LoginPage({}) {
                 <CardTitle>Login to your account</CardTitle>
             </CardHeader>
             <CardContent>
-                <form className="" onSubmit={handleSubmit(onSubmit)} name="login-form">
+                <form onSubmit={handleSubmit(onSubmit)} name="login-form">
                     <FieldGroup>
                         <Controller name="email" control={control} render={({field, fieldState}) => (
                             <Field data-invalid={fieldState.invalid}>
-                                <FieldLabel htmlFor="email">Email</FieldLabel>
+                                <FieldLabel className="text-lg" htmlFor="email">Email</FieldLabel>
                                 <Input
                                     {...field}
                                     aria-invalid={fieldState.invalid}
                                     id="email"
                                     placeholder="Enter your email"
                                     autoComplete="email"
+                                    className="text-lg"
                                 />
                                 {fieldState.invalid && <FieldError errors={[fieldState.error]}/>}
                             </Field>
                         )}/>
                         <Controller name="password" control={control} render={({field, fieldState}) => (
                             <Field data-invalid={fieldState.invalid}>
-                                <FieldLabel htmlFor="password">Password</FieldLabel>
+                                <FieldLabel className="text-lg" htmlFor="password">Password</FieldLabel>
                                 <Input
                                     type="password"
                                     id="password"
                                     placeholder="password"
                                     {...field}
                                     aria-invalid={fieldState.invalid}
+                                    className="text-lg"
                                 />
                                 {fieldState.invalid && <FieldError errors={[fieldState.error]}/>}
                             </Field>
                         )}/>
                         <Field className="w-full">
-                            <Button className="cursor-pointer" type="submit">
+                            <Button className="cursor-pointer text-lg" size={"lg"} type="submit">
                                 Login
                             </Button>
-                            <FieldDescription className="text-center">
+                            <FieldDescription className="text-center text-lg">
                                 Don&apos;t have an account? <Link href="/register">Sign up</Link>
                             </FieldDescription>
                         </Field>
