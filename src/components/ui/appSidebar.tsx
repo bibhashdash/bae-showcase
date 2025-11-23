@@ -1,34 +1,23 @@
+"use client"
 import {
     Sidebar,
-    SidebarContent, SidebarFooter,
+    SidebarContent,
+    SidebarFooter,
     SidebarGroup,
     SidebarGroupContent,
-    SidebarGroupLabel,
     SidebarHeader,
-    SidebarMenu, SidebarMenuButton,
+    SidebarMenu,
     SidebarMenuItem,
+    useSidebar,
 } from "@/components/ui/sidebar"
-import {
-    Avatar,
-    AvatarFallback,
-    AvatarImage,
-} from "@/components/ui/avatar"
-import {Separator} from "@/components/ui/separator"
+import {Avatar, AvatarFallback,} from "@/components/ui/avatar"
 
-import {
-    PiggyBank,
-    HandCoins,
-    BanknoteArrowDown,
-    Sticker,
-    CirclePlus,
-    CircleUser,
-    Home,
-    ClipboardList, SettingsIcon
-} from "lucide-react";
+import {ClipboardList, Home, SettingsIcon, Sticker} from "lucide-react";
 import Link from "next/link";
 import {AuthUser} from "@/app/(private)/[userId]/layout";
 
 export const AppSidebar = ({user}: { user: AuthUser }) => {
+    const {toggleSidebar} = useSidebar()
     return (
         <Sidebar variant="inset" collapsible="offcanvas" className="px-2 p-4">
             <SidebarHeader>
@@ -42,14 +31,14 @@ export const AppSidebar = ({user}: { user: AuthUser }) => {
                 <SidebarGroup>
                     <SidebarGroupContent>
                         <SidebarMenu className="flex flex-col gap-4">
-                            <Link href={`/${user.id}/dashboard`}>
+                            <Link href={`/${user.id}/dashboard`} onClick={() => toggleSidebar()}>
                                 <SidebarMenuItem className="flex gap-2 items-center">
                                     <Home/>
                                     Dashboard
 
                                 </SidebarMenuItem>
                             </Link>
-                            <Link href={`/${user.id}/today`}>
+                            <Link href={`/${user.id}/today`} onClick={() => toggleSidebar()}>
                                 <SidebarMenuItem className="flex gap-2 items-center">
                                     <ClipboardList/>
                                     Today

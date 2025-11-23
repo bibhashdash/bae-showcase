@@ -122,3 +122,24 @@ export const deleteUserTask = async(id: string): Promise<void> => {
         throw err;
     }
 }
+
+export const markTaskCompletion = async(id: string, isComplete: boolean): Promise<void> => {
+    const supabase = createClient();
+    try {
+        const { data, error, status } = await supabase
+            .from('tasks')
+            .update({is_complete: isComplete})
+            .eq('id', id)
+        if (error && status !== 406) {
+            console.log(error);
+            throw new Error('Error updating task');
+        }
+        if (!data) {
+
+            throw new Error('Error updating task');
+        }
+    } catch (err) {
+        console.log(error);
+        // throw new Error('Error updating task');
+    }
+}
