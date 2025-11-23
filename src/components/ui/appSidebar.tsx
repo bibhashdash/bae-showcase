@@ -23,7 +23,7 @@ export const AppSidebar = ({user}: { user: AuthUser }) => {
             <SidebarHeader>
                 <div className="flex gap-2 p-4">
                     <Sticker/>
-                    <p className="font-bold">DevZero</p>
+                    <p className="font-bold">Together</p>
                 </div>
             </SidebarHeader>
             <SidebarContent className="p-4">

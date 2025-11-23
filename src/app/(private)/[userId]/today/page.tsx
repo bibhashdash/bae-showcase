@@ -17,7 +17,7 @@ export default async function Today() {
             <Card className="h-[80vh]">
                 <CardHeader className="border-b border-gray-100">
                     <CardTitle className="flex justify-between items-center">
-                        Welcome to today!
+                        Your Tasks
                     </CardTitle>
                 </CardHeader>
                 <CardContent className="h-full">
