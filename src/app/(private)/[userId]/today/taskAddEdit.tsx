@@ -65,7 +65,7 @@ export const TaskAddEdit = ({userId, taskId, task, userFriends, onCancelAction, 
     }, [taskId]);
 
     return (
-        <>
+        <div className="h-full flex flex-col justify-between">
             <div className="p-4">
                 <FieldGroup className="w-full">
                     <Field>
@@ -140,20 +140,18 @@ export const TaskAddEdit = ({userId, taskId, task, userFriends, onCancelAction, 
                     </Field>
                 </FieldGroup>
             </div>
-            <DrawerFooter>
-                <div className="flex gap-2 justify-end">
-                    <Button onClick={onCancelAction} className="cursor-pointer" variant="secondary">Cancel</Button>
-                    <Button onClick={() => onSubmitAction({
-                        userId: userId,
-                        id: taskId !== undefined ? taskId : uuid(),
-                        assignedTo: assignedTo,
-                        deadline: deadline,
-                        isComplete: isComplete,
-                        title: title,
-                        description: description,
-                    })} className="cursor-pointer">Submit</Button>
-                </div>
-            </DrawerFooter>
-        </>
+            <div className="flex gap-2 justify-end p-4">
+                <Button onClick={onCancelAction} className="cursor-pointer" variant="secondary">Cancel</Button>
+                <Button onClick={() => onSubmitAction({
+                    userId: userId,
+                    id: taskId !== undefined ? taskId : uuid(),
+                    assignedTo: assignedTo,
+                    deadline: deadline,
+                    isComplete: isComplete,
+                    title: title,
+                    description: description,
+                })} className="cursor-pointer">Submit</Button>
+            </div>
+        </div>
     )
 }
