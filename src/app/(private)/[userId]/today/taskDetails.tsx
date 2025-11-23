@@ -1,28 +1,19 @@
-import {ArrowRight, CalendarIcon, ListTodo, UsersIcon} from "lucide-react";
+import {ArrowRight, CalendarIcon, ListTodo} from "lucide-react";
 import dayjs from "dayjs";
 import {Badge} from "@/components/ui/badge";
 import {Task} from "@/lib/utils";
-import {Button} from "@/components/ui/button";
-import {DrawerFooter} from "@/components/ui/drawer";
 
 export const TaskDetails = ({task}: { task: Task | null }) => {
     return (
         <>
-            <div className="p-4 flex flex-col gap-3">
+            <div className="p-4 flex flex-col gap-6 h-96">
                 {task?.description}
                 <div className="flex gap-2 items-center">
                     <div className="flex gap-1 items-center"><CalendarIcon size="16"/> Deadline <ArrowRight size="16"/>
                         {task?.deadline ? dayjs(task?.deadline).format('DD/MM/YYYY') : <>Indefinite</>}
                     </div>
                 </div>
-                <div className="flex gap-2 items-center">
-                    <div className="flex gap-1 items-center"><UsersIcon size="16"/> Assigned To <ArrowRight
-                        size="16"/></div>
-                    {
-                        task && task.assignedTo && task.assignedTo.length > 0 &&
-                        task?.assignedTo?.map((item) => <Badge key={item}>{item}</Badge>)
-                    }
-                </div>
+
                 <div className="flex gap-2 items-center">
                     <div className="flex gap-1 items-center"><ListTodo size="16"/> Status <ArrowRight
                         size="16"/></div>
@@ -31,11 +22,6 @@ export const TaskDetails = ({task}: { task: Task | null }) => {
                         Progress</>}</Badge>
                 </div>
             </div>
-            <DrawerFooter>
-                <div className="flex gap-2 justify-end">
-                    <Button className="cursor-pointer" variant="secondary">Close</Button>
-                </div>
-            </DrawerFooter>
         </>
     )
 }

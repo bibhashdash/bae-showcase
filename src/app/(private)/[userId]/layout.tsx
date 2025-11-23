@@ -1,20 +1,22 @@
 import {ReactNode} from "react";
 import {AppSidebar} from "@/components/ui/appSidebar";
-import {SidebarInset, SidebarProvider, SidebarTrigger} from "@/components/ui/sidebar";
-import {LogOutIcon, Menu} from "lucide-react";
+import {SidebarInset, SidebarProvider} from "@/components/ui/sidebar";
 import {createClient} from "@/lib/supabase/server";
 import {redirect} from "next/navigation";
-import {Button} from "@/components/ui/button";
+import {CustomSidebarTrigger} from "@/components/ui/customSIdebarTrigger";
+import {SignOutButton} from "@/components/ui/SIgnOut";
+
 export interface AuthUser {
     id: string | undefined;
     email?: string | undefined;
 }
-export default async function Layout({children, params}: { children: ReactNode, params: Promise<any> }) {
+export default async function Layout({children}: { children: ReactNode }) {
     const supabase = await createClient()
     const { data, error } = await supabase.auth.getUser()
     if (error || !data?.user) {
         redirect('/login')
     }
+
     return (
         <SidebarProvider
             style={
@@ -28,9 +30,9 @@ export default async function Layout({children, params}: { children: ReactNode, 
             <SidebarInset>
                 <main className="w-full">
                     <header
-                        className="sticky top-0 z-10 flex h-16 items-center  border-b border-b-border justify-between bg-background px-6">
-                        <SidebarTrigger className="ml-1"><Menu/></SidebarTrigger>
-                        <Button variant={"secondary"}>Sign out<LogOutIcon size={16} /></Button>
+                        className="sticky top-0 z-10 flex h-16 items-center border-b border-b-border justify-between bg-background px-6">
+                        <CustomSidebarTrigger />
+                        <SignOutButton />
                     </header>
                     <div className="p-3 w-full">
                         {children}
@@ -40,4 +42,3 @@ export default async function Layout({children, params}: { children: ReactNode, 
         </SidebarProvider>
     )
 }
-

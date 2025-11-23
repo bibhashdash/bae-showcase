@@ -1,5 +1,5 @@
 "use client"
-import {ActivityIcon, CheckIcon, CirclePlus, EllipsisIcon, X} from "lucide-react";
+import {ActivityIcon, CheckIcon, EllipsisIcon, Eye, PlusIcon, SquarePen, Trash2, X} from "lucide-react";
 import {
     DropdownMenu,
     DropdownMenuContent,
@@ -25,8 +25,6 @@ import {
     DialogTrigger,
 } from "@/components/ui/dialog"
 
-const userFriends: Array<string> = ["Arjun", "Nathaniel", "Kirstie"]
-
 export const TodayTreeView = ({userId}: { userId: string }) => {
     const [tasks, setTasks] = useState<Array<Task>>([]);
     const [showDrawer, setShowDrawer] = useState<boolean>(false);
@@ -44,7 +42,7 @@ export const TodayTreeView = ({userId}: { userId: string }) => {
 
     const onSubmit = (task: Task) => {
         if (inEditMode) {
-            updateUserTask(task).then(() => getAllUserTasks(userId)).then(result => setTasks(result));
+            updateUserTask(task).then(() => getAllUserTasks(userId)).then(result => setTasks(result)).finally(() => setShowDrawer(false));
         } else if (inAddMode) {
             addUserTask(task).then(result => {
                 setTasks(prevTasks => [...prevTasks, result])
@@ -82,10 +80,10 @@ export const TodayTreeView = ({userId}: { userId: string }) => {
                         (task: Task) =>
                             <div
                                 key={task.id}
-                                className="border rounded border-gray-200 p-2 flex items-center gap-2 w-full relative"
+                                className="text-lg border rounded border-gray-200 p-2 flex items-center gap-2 w-full relative"
                             >
                                 {task.isComplete ? <CheckIcon className="text-success" /> : <ActivityIcon className="text-warning" />}
-                                <p className={`text-sm overflow-hidden truncate text-ellipsis ${task.isComplete ? "line-through" : ""}`}>{task.title}</p>
+                                <p className={`overflow-hidden truncate text-ellipsis ${task.isComplete ? "line-through" : ""}`}>{task.title}</p>
                                 <div className="absolute right-2">
                                     <Dialog open={showDeleteModal} onOpenChange={setShowDeleteModal}>
                                         <DropdownMenu>
@@ -93,27 +91,30 @@ export const TodayTreeView = ({userId}: { userId: string }) => {
                                                 className="flex gap-2 items-center cursor-pointer hover:rounded hover:bg-primary hover:text-white focus:outline-none p-1">
                                                 <EllipsisIcon/>
                                             </DropdownMenuTrigger>
-                                            <DropdownMenuContent align="end">
+                                            <DropdownMenuContent className="p-3" align="end">
                                                 <DropdownMenuItem
                                                     onClick={() => {
                                                         setShowDrawer(true)
                                                         setDrawerContent(task)
                                                     }}
-                                                    className="cursor-pointer hover:bg-gray-200">View Details</DropdownMenuItem>
+                                                    className="cursor-pointer hover:bg-gray-200 text-lg">
+                                                    <Eye /> View Details
+                                                </DropdownMenuItem>
                                                 {task.isComplete
                                                     ? <DropdownMenuItem onClick={() => markInComplete(task.id)}
-                                                                        className="cursor-pointer hover:bg-gray-200">
-                                                        Mark Incomplete
+                                                                        className="cursor-pointer hover:bg-gray-200 text-lg">
+                                                        <ActivityIcon /> Mark Incomplete
                                                     </DropdownMenuItem>
                                                     : <DropdownMenuItem onClick={() => markComplete(task.id)}
-                                                                        className="cursor-pointer hover:bg-gray-200">
-                                                        Mark Complete
+                                                                        className="cursor-pointer hover:bg-gray-200 text-lg">
+                                                       <CheckIcon /> Mark Complete
                                                     </DropdownMenuItem>}
                                                 <DropdownMenuItem onClick={() => {
                                                     setDrawerContent(task);
                                                     setShowDrawer(true);
                                                     setInEditMode(true)
-                                                }} className="cursor-pointer hover:bg-gray-200">Edit</DropdownMenuItem>
+                                                }} className="cursor-pointer hover:bg-gray-200 text-lg">
+                                                    <SquarePen /> Edit</DropdownMenuItem>
                                                 <DropdownMenuSeparator/>
                                                 <DialogTrigger>
                                                     <DropdownMenuItem
@@ -121,7 +122,8 @@ export const TodayTreeView = ({userId}: { userId: string }) => {
                                                             setShowDrawer(false);
                                                             setDeleteId(task.id)
                                                         }}
-                                                        className="cursor-pointer hover:bg-gray-200">Delete</DropdownMenuItem>
+                                                        className="cursor-pointer hover:bg-gray-200 text-lg">
+                                                        <Trash2 /> Delete</DropdownMenuItem>
                                                 </DialogTrigger>
                                             </DropdownMenuContent>
                                         </DropdownMenu>
@@ -160,7 +162,6 @@ export const TodayTreeView = ({userId}: { userId: string }) => {
                                 userId={userId}
                                 onCancelAction={() => closeDrawer()}
                                 onSubmitAction={task => onSubmit(task)}
-                                userFriends={userFriends}
                                 taskId={inEditMode ? drawerContent?.id : undefined}
                                 task={inEditMode ? drawerContent : null}
                             />
@@ -171,17 +172,14 @@ export const TodayTreeView = ({userId}: { userId: string }) => {
                 </DrawerContent>
             </Drawer>
             <div className="absolute bottom-0 right-0">
-                <Button
-                    className="cursor-pointer"
+                <PlusIcon
+                    className="text-white bg-rose-500 rounded-full"
                     onClick={() => {
-                        setInEditMode(false);
-                        setDrawerContent(null);
-                        setShowDrawer(true);
-                        setInAddMode(true)
-                    }}
-                >
-                    Add Task <CirclePlus/>
-                </Button>
+                    setInEditMode(false);
+                    setDrawerContent(null);
+                    setShowDrawer(true);
+                    setInAddMode(true)
+                }} size={64}/>
             </div>
         </div>
     )

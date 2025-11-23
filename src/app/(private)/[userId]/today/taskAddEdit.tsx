@@ -7,18 +7,15 @@ import {Task} from "@/lib/utils";
 import {Switch} from "@/components/ui/switch";
 import {Label} from "@/components/ui/label";
 import {Calendar} from "@/components/ui/calendar"
-import {Checkbox} from "@/components/ui/checkbox"
 import {Popover, PopoverContent, PopoverTrigger,} from "@/components/ui/popover"
 import {Button} from "@/components/ui/button";
 import {ChevronDownIcon} from "lucide-react";
-import {DrawerFooter,} from "@/components/ui/drawer"
 import {v4 as uuid} from "uuid";
 
-export const TaskAddEdit = ({userId, taskId, task, userFriends, onCancelAction, onSubmitAction}: {
+export const TaskAddEdit = ({userId, taskId, task, onCancelAction, onSubmitAction}: {
     userId: string,
     taskId: string | undefined,
     task: Task | null,
-    userFriends: Array<string>,
     onCancelAction: () => void,
     onSubmitAction: (task: Task) => void
 }) => {
@@ -28,27 +25,6 @@ export const TaskAddEdit = ({userId, taskId, task, userFriends, onCancelAction, 
     const [assignedTo, setAssignedTo] = useState<Array<string>>([]);
     const [deadline, setDeadline] = useState<Date | undefined>(new Date());
     const [openDatePicker, setOpenDatePicker] = useState<boolean>(false);
-
-    const handleCheckChange = (element: string, checked: boolean) => {
-        const index = assignedTo?.indexOf(element);
-        const isCurrentlyPresent = index !== -1;
-        if (checked) {
-            if (isCurrentlyPresent) {
-                setAssignedTo(assignedTo);
-            } else {
-                setAssignedTo(prevState => [...prevState, element]);
-            }
-        } else {
-            if (isCurrentlyPresent) {
-                setAssignedTo(prevState => [
-                    ...prevState.slice(0, index),
-                    ...prevState.slice(index + 1)
-                ]);
-            } else {
-                setAssignedTo(assignedTo);
-            }
-        }
-    }
 
     useEffect(() => {
         if (taskId !== undefined && task !== null) {
@@ -69,8 +45,9 @@ export const TaskAddEdit = ({userId, taskId, task, userFriends, onCancelAction, 
             <div className="p-4">
                 <FieldGroup className="w-full">
                     <Field>
-                        <FieldLabel htmlFor="title">Title</FieldLabel>
+                        <FieldLabel className="text-lg" htmlFor="title">Title</FieldLabel>
                         <Input
+                            className="text-lg h-12"
                             value={title}
                             id="title"
                             onChange={(e) => setTitle(e.target.value)}
@@ -79,8 +56,9 @@ export const TaskAddEdit = ({userId, taskId, task, userFriends, onCancelAction, 
                     </Field>
 
                     <Field>
-                        <FieldLabel htmlFor="description">Description</FieldLabel>
+                        <FieldLabel className="text-lg" htmlFor="description">Description</FieldLabel>
                         <Textarea
+                            className="text-lg"
                             value={description}
                             id="description"
                             onChange={(e) => setDescription(e.target.value)}
@@ -88,38 +66,21 @@ export const TaskAddEdit = ({userId, taskId, task, userFriends, onCancelAction, 
                         />
                     </Field>
 
-                    <Field>
-                        <FieldLabel htmlFor="assigned-to">Assigned To</FieldLabel>
-                        <div className="grid grid-cols-2 gap-4">
-                            {
-                                userFriends.length > 0 &&
-                                userFriends.map(
-                                    friend =>
-                                        <div key={friend} className="flex gap-2">
-                                            <Checkbox checked={assignedTo?.includes(friend)}
-                                                      onCheckedChange={checked => handleCheckChange(friend, checked as boolean)}/>
-                                            <Label htmlFor={friend}>{friend}</Label>
-                                        </div>
-                                )
-                            }
-                        </div>
-                    </Field>
-
                     <Field className="w-fit">
-                        <Label htmlFor="is-complete">Complete?</Label>
-                        <div className="flex">
+                        <Label className="text-lg" htmlFor="is-complete">Complete?</Label>
+                        <div className="flex text-lg">
                             <Switch onCheckedChange={setIsComplete} checked={isComplete} id="is-complete"/>
                         </div>
                     </Field>
 
                     <Field>
-                        <FieldLabel htmlFor="deadline">Deadline</FieldLabel>
+                        <FieldLabel className="text-lg" htmlFor="deadline">Deadline</FieldLabel>
                         <Popover open={openDatePicker} onOpenChange={setOpenDatePicker}>
                             <PopoverTrigger asChild>
                                 <Button
                                     variant="outline"
                                     id="date"
-                                    className="w-48 justify-between font-normal"
+                                    className="w-48 h-12 justify-between font-normal text-lg"
                                 >
                                     {(deadline && true) ? new Date(deadline).toLocaleDateString() : "Select deadline"}
                                     <ChevronDownIcon/>
@@ -141,7 +102,7 @@ export const TaskAddEdit = ({userId, taskId, task, userFriends, onCancelAction, 
                 </FieldGroup>
             </div>
             <div className="flex gap-2 justify-end p-4">
-                <Button onClick={onCancelAction} className="cursor-pointer" variant="secondary">Cancel</Button>
+                <Button onClick={onCancelAction} className="cursor-pointer text-lg" variant="secondary">Cancel</Button>
                 <Button onClick={() => onSubmitAction({
                     userId: userId,
                     id: taskId !== undefined ? taskId : uuid(),
@@ -150,7 +111,7 @@ export const TaskAddEdit = ({userId, taskId, task, userFriends, onCancelAction, 
                     isComplete: isComplete,
                     title: title,
                     description: description,
-                })} className="cursor-pointer">Submit</Button>
+                })} className="cursor-pointer text-lg">Submit</Button>
             </div>
         </div>
     )

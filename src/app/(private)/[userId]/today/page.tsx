@@ -1,8 +1,6 @@
 import {createClient} from "@/lib/supabase/server";
 import {redirect} from "next/navigation";
 import {Card, CardContent, CardFooter, CardHeader, CardTitle} from "@/components/ui/card";
-import {Button} from "@/components/ui/button";
-import {CirclePlus} from "lucide-react";
 import {TodayTreeView} from "@/app/(private)/[userId]/today/todayTreeView";
 
 export default async function Today() {
@@ -16,7 +14,7 @@ export default async function Today() {
         <>
             <Card className="h-[80vh]">
                 <CardHeader className="border-b border-gray-100">
-                    <CardTitle className="flex justify-between items-center">
+                    <CardTitle className="flex justify-between items-center text-2xl">
                         Your Tasks
                     </CardTitle>
                 </CardHeader>
