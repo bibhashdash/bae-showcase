@@ -29,53 +29,56 @@ export default function RegisterPage() {
     return (
         <Card className="w-full">
             <CardHeader>
-                <CardTitle>Sign Up to Journalease</CardTitle>
+                <CardTitle>Sign Up to Together</CardTitle>
             </CardHeader>
             <CardContent>
                 <form id="registerForm" onSubmit={handleSubmit(onSubmit)}>
                     <FieldGroup>
                         <Controller name="email" control={control} render={({field, fieldState}) => (
                             <Field data-invalid={fieldState.invalid}>
-                                <FieldLabel htmlFor="email">Email</FieldLabel>
+                                <FieldLabel className="text-lg" htmlFor="email">Email</FieldLabel>
                                 <Input
                                     {...field}
                                     aria-invalid={fieldState.invalid}
                                     id="email"
                                     placeholder="Enter your email"
                                     autoComplete="email"
+                                    className="text-lg"
                                 />
                                 {fieldState.invalid && <FieldError errors={[fieldState.error]}/>}
                             </Field>
                         )}/>
                         <Controller name="password" control={control} render={({field, fieldState}) => (
                             <Field data-invalid={fieldState.invalid}>
-                                <FieldLabel htmlFor="password">Password</FieldLabel>
+                                <FieldLabel className="text-lg" htmlFor="password">Password</FieldLabel>
                                 <Input
                                     type="password"
                                     id="password"
                                     placeholder="password"
                                     {...field}
                                     aria-invalid={fieldState.invalid}
+                                    className="text-lg"
                                 />
                                 {fieldState.invalid && <FieldError errors={[fieldState.error]}/>}
                             </Field>
                         )}/>
                         <Controller name="confirm" control={control} render={({field, fieldState}) => (
                             <Field data-invalid={fieldState.invalid}>
-                                <FieldLabel htmlFor="confirm">Confirm Password</FieldLabel>
+                                <FieldLabel className="text-lg" htmlFor="confirm">Confirm Password</FieldLabel>
                                 <Input
                                     type="password"
                                     id="confirm"
                                     placeholder="password"
                                     {...field}
                                     aria-invalid={fieldState.invalid}
+                                    className="text-lg"
                                 />
                                 {fieldState.invalid && <FieldError errors={[fieldState.error]}/>}
                             </Field>
                         )}/>
                         <Field className="w-full">
-                            <Button type="submit" form="registerForm">Register</Button>
-                            <FieldDescription className="text-center">
+                            <Button className="text-lg" type="submit" form="registerForm">Register</Button>
+                            <FieldDescription className="text-center text-lg">
                                 Already have an account? <Link href="/login">Login</Link>
                             </FieldDescription>
                         </Field>

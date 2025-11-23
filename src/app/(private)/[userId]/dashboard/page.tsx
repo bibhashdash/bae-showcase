@@ -1,5 +1,8 @@
 import {createClient} from "@/lib/supabase/server";
 import {redirect} from "next/navigation";
+import {Card, CardContent, CardFooter, CardHeader, CardTitle} from "@/components/ui/card";
+import {TodayTreeView} from "@/app/(private)/[userId]/today/todayTreeView";
+import {Summary} from "@/app/(private)/[userId]/dashboard/summary";
 
 export default async function Dashboard() {
     const supabase = await createClient()
@@ -8,7 +11,19 @@ export default async function Dashboard() {
         redirect('/login')
     }
 
-    return <div>
+    return <>
+        <Card className="h-[80vh]">
+            <CardHeader className="border-b border-gray-100">
+                <CardTitle className="flex justify-between items-center text-2xl">
+                    Summary
+                </CardTitle>
+            </CardHeader>
+            <CardContent className="h-full">
+                <Summary userId={data?.user.id} />
+            </CardContent>
+            <CardFooter>
 
-    </div>
+            </CardFooter>
+        </Card>
+    </>
 }

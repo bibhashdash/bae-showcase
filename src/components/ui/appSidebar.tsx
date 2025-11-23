@@ -41,7 +41,7 @@ export const AppSidebar = ({user}: { user: AuthUser }) => {
                             <Link href={`/${user.id}/today`} onClick={() => toggleSidebar()}>
                                 <SidebarMenuItem className="flex gap-2 items-center">
                                     <ClipboardList/>
-                                    Today
+                                    Tasks
                                 </SidebarMenuItem>
                             </Link>
                         </SidebarMenu>

@@ -24,6 +24,7 @@ import {
     DialogTitle,
     DialogTrigger,
 } from "@/components/ui/dialog"
+import {EmptyState} from "@/components/ui/EmptyState";
 
 export const TodayTreeView = ({userId}: { userId: string }) => {
     const [tasks, setTasks] = useState<Array<Task>>([]);
@@ -76,7 +77,8 @@ export const TodayTreeView = ({userId}: { userId: string }) => {
         <div className="w-full h-full relative">
             <div className="flex flex-col lg:grid lg:grid-cols-2 gap-2">
                 {
-                    tasks.map(
+                    tasks.length > 0 ?
+                        tasks.map(
                         (task: Task) =>
                             <div
                                 key={task.id}
@@ -145,6 +147,7 @@ export const TodayTreeView = ({userId}: { userId: string }) => {
                                 </div>
                             </div>
                     )
+                        : <EmptyState />
                 }
             </div>
             <Drawer open={showDrawer} onClose={closeDrawer}>

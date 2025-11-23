@@ -18,7 +18,7 @@ export const SignOutButton = () => {
     return (
         <Dialog>
             <DialogTrigger asChild>
-                <Button variant={"secondary"} size={"lg"} className="text-lg">Sign out<LogOutIcon size={16}/></Button>
+                <LogOutIcon size={24}/>
             </DialogTrigger>
             <DialogContent className="text-lg">
                 <DialogHeader>
