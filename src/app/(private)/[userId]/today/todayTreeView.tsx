@@ -75,7 +75,7 @@ export const TodayTreeView = ({userId}: { userId: string }) => {
 
     return (
         <div className="w-full h-full relative">
-            <div className="flex flex-col lg:grid lg:grid-cols-2 gap-2">
+            <div className="flex flex-col lg:grid lg:grid-cols-2 gap-2 overflow-auto">
                 {
                     tasks.length > 0 ?
                         tasks.map(
