@@ -9,8 +9,6 @@ import {
     CardHeader,
     CardTitle,
 } from "@/components/ui/card"
-import {getUserProfile} from "@/lib/supabase/api";
-import {resolveUrl} from "next/dist/lib/metadata/resolvers/resolve-url";
 
 export default async function Profile() {
     const supabase = await createClient()

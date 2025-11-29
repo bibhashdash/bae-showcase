@@ -1,9 +1,7 @@
-import {Task, User} from "@/lib/utils";
+import {Task} from "@/lib/utils";
 import {createClient} from "@/lib/supabase/client";
-// import {createClient as createServerClient} from "@/lib/supabase/server";
-
-import * as zod from "zod";
 import {error} from "next/dist/build/output/log";
+
 export const signOut = async(): Promise<void> => {
     const supabase = createClient();
     await supabase.auth.signOut();
