@@ -5,6 +5,7 @@ import {createClient} from "@/lib/supabase/server";
 import {redirect} from "next/navigation";
 import {CustomSidebarTrigger} from "@/components/ui/customSIdebarTrigger";
 import {SignOutButton} from "@/components/ui/SIgnOut";
+import {getUserProfile} from "@/app/lib/actions";
 
 export interface AuthUser {
     id: string | undefined;
@@ -17,6 +18,10 @@ export default async function Layout({children}: { children: ReactNode }) {
         redirect('/login')
     }
 
+    const userProfile = await getUserProfile(data.user.id);
+
+    if (!userProfile) return null
+
     return (
         <SidebarProvider
             style={
@@ -26,7 +31,7 @@ export default async function Layout({children}: { children: ReactNode }) {
                 } as React.CSSProperties
             }
         >
-            <AppSidebar user={data.user} />
+            <AppSidebar user={userProfile} />
             <SidebarInset>
                 <main className="w-full">
                     <header

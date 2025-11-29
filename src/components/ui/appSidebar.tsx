@@ -12,16 +12,16 @@ import {
 } from "@/components/ui/sidebar"
 import {Avatar, AvatarFallback,} from "@/components/ui/avatar"
 
-import {ClipboardList, Home, SettingsIcon, Sticker, UserIcon} from "lucide-react";
+import {ArrowRightLeft, ClipboardList, Home, SettingsIcon, Sticker, Trophy, UserIcon} from "lucide-react";
 import Link from "next/link";
-import {AuthUser} from "@/app/(private)/[userId]/layout";
+import {User} from "@/lib/utils";
 
-export const AppSidebar = ({user}: { user: AuthUser }) => {
+export const AppSidebar = ({user}: { user: User }) => {
     const {toggleSidebar} = useSidebar()
     return (
         <Sidebar variant="inset" collapsible="offcanvas" className="px-2 p-4">
             <SidebarHeader>
-                <div className="flex gap-2 p-4">
+                <div className="flex gap-2 p-4 items-center">
                     <Sticker/>
                     <p className="font-bold text-lg">Together</p>
                 </div>
@@ -30,18 +30,30 @@ export const AppSidebar = ({user}: { user: AuthUser }) => {
 
                 <SidebarGroup>
                     <SidebarGroupContent>
-                        <SidebarMenu className="flex flex-col gap-4 text-lg">
-                            <Link href={`/${user.id}/dashboard`} onClick={() => toggleSidebar()}>
+                        <SidebarMenu className="flex flex-col gap-6 text-lg">
+                            <Link href={`/${user.userId}/dashboard`} onClick={() => toggleSidebar()}>
                                 <SidebarMenuItem className="flex gap-2 items-center ">
                                     <Home/>
                                     Dashboard
 
                                 </SidebarMenuItem>
                             </Link>
-                            <Link href={`/${user.id}/today`} onClick={() => toggleSidebar()}>
+                            <Link href={`/${user.userId}/today`} onClick={() => toggleSidebar()}>
                                 <SidebarMenuItem className="flex gap-2 items-center">
                                     <ClipboardList/>
                                     Tasks
+                                </SidebarMenuItem>
+                            </Link>
+                            <Link href={`/${user.userId}/trades`} onClick={() => toggleSidebar()}>
+                                <SidebarMenuItem className="flex gap-2 items-center">
+                                    <ArrowRightLeft />
+                                    Trades
+                                </SidebarMenuItem>
+                            </Link>
+                            <Link href={`/${user.userId}/inventory`} onClick={() => toggleSidebar()}>
+                                <SidebarMenuItem className="flex gap-2 items-center">
+                                    <Trophy />
+                                    Inventory
                                 </SidebarMenuItem>
                             </Link>
                         </SidebarMenu>

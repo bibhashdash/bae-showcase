@@ -1,15 +1,9 @@
 "use client"
 import {ActivityIcon, CheckIcon, EllipsisIcon, Eye, PlusIcon, SquarePen, Trash2, X} from "lucide-react";
-import {
-    DropdownMenu,
-    DropdownMenuContent,
-    DropdownMenuItem,
-    DropdownMenuSeparator,
-    DropdownMenuTrigger,
-} from "@/components/ui/dropdown-menu"
+import {DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger,} from "@/components/ui/dropdown-menu"
 import {Drawer, DrawerContent, DrawerHeader, DrawerTitle,} from "@/components/ui/drawer"
 import {useEffect, useState} from "react";
-import {Task} from "@/lib/utils";
+import {Task, User} from "@/lib/utils";
 import {TaskDetails} from "@/app/(private)/[userId]/today/taskDetails";
 import {Button} from "@/components/ui/button";
 import {TaskAddEdit} from "@/app/(private)/[userId]/today/taskAddEdit";
@@ -27,7 +21,7 @@ import {
 } from "@/components/ui/dialog"
 import {EmptyState} from "@/components/ui/EmptyState";
 
-export const TodayTreeView = ({userId}: { userId: string }) => {
+export const TodayTreeView = ({userId, user}: { userId: string, user: User }) => {
     const [tasks, setTasks] = useState<Array<Task>>([]);
     const [showDrawer, setShowDrawer] = useState<boolean>(false);
     const [drawerContent, setDrawerContent] = useState<Task | null>(null);
@@ -78,93 +72,102 @@ export const TodayTreeView = ({userId}: { userId: string }) => {
         <div className="w-full h-full relative">
             <div className="flex justify-between items-center my-2">
                 <p>Filters Here</p>
-                <Button
+                {user.userRole === 0 && <Button
                     className="flex items-center"
                     onClick={() => {
-                    setInEditMode(false);
-                    setDrawerContent(null);
-                    setShowDrawer(true);
-                    setInAddMode(true)
-                }}>
+                        setInEditMode(false);
+                        setDrawerContent(null);
+                        setShowDrawer(true);
+                        setInAddMode(true)
+                    }}>
                     Add Task
                     <PlusIcon
                         className="text-primary bg-white rounded-full"
                         size={16}/>
-                </Button>
+                </Button>}
             </div>
             <div className="flex flex-col lg:grid lg:grid-cols-2 gap-2 overflow-auto">
                 {
                     tasks.length > 0 ?
                         tasks.map(
-                        (task: Task) =>
-                            <div
-                                key={task.id}
-                                className="text-lg border rounded border-gray-200 p-2 flex items-center gap-2 w-full relative"
-                            >
-                                {task.isComplete ? <CheckIcon className="text-success" /> : <ActivityIcon className="text-warning" />}
-                                <p className={`overflow-hidden truncate text-ellipsis ${task.isComplete ? "line-through" : ""}`}>{task.title}</p>
-                                <div className="absolute right-2">
-                                    <Dialog open={showDeleteModal} onOpenChange={setShowDeleteModal}>
-                                        <DropdownMenu>
-                                            <DropdownMenuTrigger
-                                                className="flex gap-2 items-center cursor-pointer hover:rounded hover:bg-primary hover:text-white focus:outline-none p-1">
-                                                <EllipsisIcon/>
-                                            </DropdownMenuTrigger>
-                                            <DropdownMenuContent className="p-3" align="end">
-                                                <DropdownMenuItem
-                                                    onClick={() => {
-                                                        setShowDrawer(true)
-                                                        setDrawerContent(task)
-                                                    }}
-                                                    className="cursor-pointer hover:bg-gray-200 text-lg">
-                                                    <Eye /> View Details
-                                                </DropdownMenuItem>
-                                                {task.isComplete
-                                                    ? <DropdownMenuItem onClick={() => markInComplete(task.id)}
-                                                                        className="cursor-pointer hover:bg-gray-200 text-lg">
-                                                        <ActivityIcon /> Mark Incomplete
-                                                    </DropdownMenuItem>
-                                                    : <DropdownMenuItem onClick={() => markComplete(task.id)}
-                                                                        className="cursor-pointer hover:bg-gray-200 text-lg">
-                                                       <CheckIcon /> Mark Complete
-                                                    </DropdownMenuItem>}
-                                                <DropdownMenuItem onClick={() => {
-                                                    setDrawerContent(task);
-                                                    setShowDrawer(true);
-                                                    setInEditMode(true)
-                                                }} className="cursor-pointer hover:bg-gray-200 text-lg">
-                                                    <SquarePen /> Edit</DropdownMenuItem>
-                                                <DropdownMenuSeparator/>
-                                                <DialogTrigger>
+                            (task: Task) =>
+                                <div
+                                    key={task.id}
+                                    className="text-lg border rounded border-gray-200 p-2 flex items-center gap-2 w-full relative"
+                                >
+                                    {task.isComplete ? <CheckIcon className="text-success"/> :
+                                        <ActivityIcon className="text-warning"/>}
+                                    <p className={`overflow-hidden truncate text-ellipsis ${task.isComplete ? "line-through" : ""}`}>{task.title}</p>
+                                    <div className="absolute right-2">
+                                        <Dialog open={showDeleteModal} onOpenChange={setShowDeleteModal}>
+                                            <DropdownMenu>
+                                                <DropdownMenuTrigger
+                                                    className="flex gap-2 items-center cursor-pointer hover:rounded hover:bg-primary hover:text-white focus:outline-none p-1">
+                                                    <EllipsisIcon/>
+                                                </DropdownMenuTrigger>
+                                                <DropdownMenuContent className="p-3" align="end">
                                                     <DropdownMenuItem
                                                         onClick={() => {
-                                                            setShowDrawer(false);
-                                                            setDeleteId(task.id)
+                                                            setShowDrawer(true)
+                                                            setDrawerContent(task)
                                                         }}
                                                         className="cursor-pointer hover:bg-gray-200 text-lg">
-                                                        <Trash2 /> Delete</DropdownMenuItem>
-                                                </DialogTrigger>
-                                            </DropdownMenuContent>
-                                        </DropdownMenu>
+                                                        <Eye/> View Details
+                                                    </DropdownMenuItem>
+                                                    {task.isComplete
+                                                        ? <DropdownMenuItem onClick={() => markInComplete(task.id)}
+                                                                            className="cursor-pointer hover:bg-gray-200 text-lg">
+                                                            <ActivityIcon/> Mark Incomplete
+                                                        </DropdownMenuItem>
+                                                        : <DropdownMenuItem onClick={() => markComplete(task.id)}
+                                                                            className="cursor-pointer hover:bg-gray-200 text-lg">
+                                                            <CheckIcon/> Mark Complete
+                                                        </DropdownMenuItem>}
 
-                                        <DialogContent>
-                                            <DialogHeader>
-                                                <DialogTitle>Delete Task</DialogTitle>
-                                                <DialogDescription>
-                                                    There's no going back from this! Are you sure?
-                                                </DialogDescription>
-                                            </DialogHeader>
-                                            <DialogFooter>
-                                                <DialogClose asChild><Button size={"lg"} variant="secondary" onClick={() => setDeleteId(null)}>Cancel</Button></DialogClose>
-                                                <Button size={"lg"} onClick={() => handleDelete()} type="submit">Confirm</Button>
-                                            </DialogFooter>
-                                        </DialogContent>
+                                                    {
+                                                        user.userRole === 0 &&
+                                                        <>
+                                                            <DropdownMenuItem onClick={() => {
+                                                                setDrawerContent(task);
+                                                                setShowDrawer(true);
+                                                                setInEditMode(true)
+                                                            }} className="cursor-pointer hover:bg-gray-200 text-lg">
+                                                                <SquarePen/> Edit
+                                                            </DropdownMenuItem>
+                                                            <DialogTrigger>
+                                                                <DropdownMenuItem
+                                                                    onClick={() => {
+                                                                        setShowDrawer(false);
+                                                                        setDeleteId(task.id)
+                                                                    }}
+                                                                    className="cursor-pointer hover:bg-gray-200 text-lg">
+                                                                    <Trash2/> Delete</DropdownMenuItem>
+                                                            </DialogTrigger>
+                                                        </>
+                                                    }
+                                                </DropdownMenuContent>
+                                            </DropdownMenu>
 
-                                    </Dialog>
+                                            <DialogContent>
+                                                <DialogHeader>
+                                                    <DialogTitle>Delete Task</DialogTitle>
+                                                    <DialogDescription>
+                                                        There's no going back from this! Are you sure?
+                                                    </DialogDescription>
+                                                </DialogHeader>
+                                                <DialogFooter>
+                                                    <DialogClose asChild><Button size={"lg"} variant="secondary"
+                                                                                 onClick={() => setDeleteId(null)}>Cancel</Button></DialogClose>
+                                                    <Button size={"lg"} onClick={() => handleDelete()}
+                                                            type="submit">Confirm</Button>
+                                                </DialogFooter>
+                                            </DialogContent>
+
+                                        </Dialog>
+                                    </div>
                                 </div>
-                            </div>
-                    )
-                        : <EmptyState />
+                        )
+                        : <EmptyState/>
                 }
             </div>
             <Drawer open={showDrawer} onClose={closeDrawer}>

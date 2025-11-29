@@ -2,6 +2,7 @@ import {createClient} from "@/lib/supabase/server";
 import {redirect} from "next/navigation";
 import {Card, CardContent, CardFooter, CardHeader, CardTitle} from "@/components/ui/card";
 import {TodayTreeView} from "@/app/(private)/[userId]/today/todayTreeView";
+import {getUserProfile} from "@/app/lib/actions";
 
 export default async function Today() {
     const supabase = await createClient()
@@ -9,6 +10,10 @@ export default async function Today() {
     if (error || !data?.user) {
         redirect('/login')
     }
+
+    const userProfile = await getUserProfile(data.user.id)
+
+    if (!userProfile) return null
 
     return (
         <>
@@ -19,7 +24,7 @@ export default async function Today() {
                     </CardTitle>
                 </CardHeader>
                 <CardContent className="h-full">
-                    <TodayTreeView userId={data.user.id} />
+                    <TodayTreeView user={userProfile} userId={data.user.id} />
                 </CardContent>
                 <CardFooter>
 
