@@ -13,7 +13,8 @@ import {Task} from "@/lib/utils";
 import {TaskDetails} from "@/app/(private)/[userId]/today/taskDetails";
 import {Button} from "@/components/ui/button";
 import {TaskAddEdit} from "@/app/(private)/[userId]/today/taskAddEdit";
-import {addUserTask, deleteUserTask, getAllUserTasks, markTaskCompletion, updateUserTask} from "@/lib/supabase/api";
+import {addUserTask, deleteUserTask, markTaskCompletion, updateUserTask} from "@/lib/supabase/api";
+import {getAllUserTasks} from "@/app/lib/actions";
 import {
     Dialog,
     DialogClose,
@@ -75,6 +76,22 @@ export const TodayTreeView = ({userId}: { userId: string }) => {
 
     return (
         <div className="w-full h-full relative">
+            <div className="flex justify-between items-center my-2">
+                <p>Filters Here</p>
+                <Button
+                    className="flex items-center"
+                    onClick={() => {
+                    setInEditMode(false);
+                    setDrawerContent(null);
+                    setShowDrawer(true);
+                    setInAddMode(true)
+                }}>
+                    Add Task
+                    <PlusIcon
+                        className="text-primary bg-white rounded-full"
+                        size={16}/>
+                </Button>
+            </div>
             <div className="flex flex-col lg:grid lg:grid-cols-2 gap-2 overflow-auto">
                 {
                     tasks.length > 0 ?
@@ -174,16 +191,6 @@ export const TodayTreeView = ({userId}: { userId: string }) => {
                     }
                 </DrawerContent>
             </Drawer>
-            <div className="absolute bottom-0 right-0">
-                <PlusIcon
-                    className="text-white bg-rose-500 rounded-full"
-                    onClick={() => {
-                    setInEditMode(false);
-                    setDrawerContent(null);
-                    setShowDrawer(true);
-                    setInAddMode(true)
-                }} size={64}/>
-            </div>
         </div>
     )
 }

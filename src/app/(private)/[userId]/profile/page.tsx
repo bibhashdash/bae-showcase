@@ -11,7 +11,7 @@ import {
 } from "@/components/ui/card"
 import {getUserProfile} from "@/lib/supabase/api";
 import {resolveUrl} from "next/dist/lib/metadata/resolvers/resolve-url";
-import {UserProfileForm} from "@/components/ui/userProfileForm";
+
 export default async function Profile() {
     const supabase = await createClient()
     const { data, error } = await supabase.auth.getUser()
@@ -30,7 +30,7 @@ export default async function Profile() {
                 </CardDescription>
             </CardHeader>
             <CardContent>
-                <UserProfileForm userId={data.user.id} />
+
             </CardContent>
             <CardFooter>
 

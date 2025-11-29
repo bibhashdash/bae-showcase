@@ -1,9 +1,10 @@
 "use server";
-import {LoginSchema, RegisterSchema} from "@/lib/utils";
+import {LoginSchema, RegisterSchema, Task, User} from "@/lib/utils";
 import * as z from "zod";
 import {createClient} from "@/lib/supabase/server";
 import {redirect} from 'next/navigation'
 import {revalidatePath} from 'next/cache'
+import * as zod from "zod";
 
 export async function login (formData: unknown) {
     const supabase = await createClient()
@@ -43,4 +44,46 @@ export async function logout () {
     }
     revalidatePath('/', 'layout')
     redirect("/login")
+}
+
+export const getUserProfile = async(id: string): Promise<zod.infer<typeof User>> => {
+    const supabase = await createClient();
+
+    try {
+        const { data, error, status } = await supabase
+            .from('profiles')
+            .select(`userId: user_id, fullName: full_name, username: username, bio: bio`)
+            .eq('user_id', id)
+            .single()
+        if (error && status !== 406) {
+            console.log(error);
+            throw error;
+        }
+        if (!data) {
+            throw new Error('User not found.');
+        }
+        return User.parse(data)
+    } catch (error) {
+        throw error;
+    }
+}
+
+export const getAllUserTasks = async(userId: string): Promise<Task[]> => {
+    const supabase = await createClient();
+    try {
+        const { data, error, status } = await supabase
+            .from('tasks')
+            .select(`id: id, userId: user_id, title: title, description: description, assignedTo: assigned_to, isComplete: is_complete, deadline: deadline`)
+            .eq('user_id', userId)
+        if (error && status !== 406) {
+            console.log(error);
+            throw new Error('Error fetching tasks');
+        }
+        if (!data) {
+            throw new Error('Error fetching tasks');
+        }
+        return data
+    } catch (err) {
+        throw err;
+    }
 }
