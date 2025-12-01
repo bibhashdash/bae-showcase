@@ -39,7 +39,7 @@ export default async function Layout({children}: { children: ReactNode }) {
                         <CustomSidebarTrigger />
                         <SignOutButton />
                     </header>
-                    <div className="p-3 w-full">
+                    <div className="p-1 md:p-3 w-full">
                         {children}
                     </div>
                 </main>

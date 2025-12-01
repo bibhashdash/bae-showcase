@@ -68,13 +68,16 @@ export const getUserProfile = async(id: string): Promise<User> => {
 }
 
 export const getAllUserTasks = async(userId: string): Promise<Task[]> => {
+
     const supabase = await createClient();
+    let query = supabase
+        .from('tasks')
+        .select(`id: id, userId: user_id, title: title, description: description, assignedTo: assigned_to, isComplete: is_complete, deadline: deadline`)
+        .order('created_at', { ascending: false })
+        .eq('user_id', userId)
+
     try {
-        const { data, error, status } = await supabase
-            .from('tasks')
-            .select(`id: id, userId: user_id, title: title, description: description, assignedTo: assigned_to, isComplete: is_complete, deadline: deadline`)
-            .order('created_at', { ascending: false })
-            .eq('user_id', userId)
+        const { data, error, status } = await query;
         if (error && status !== 406) {
             console.log(error);
             throw new Error('Error fetching tasks');
