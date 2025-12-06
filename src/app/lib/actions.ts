@@ -72,7 +72,7 @@ export const getAllUserTasks = async(userId: string): Promise<Task[]> => {
     const supabase = await createClient();
     let query = supabase
         .from('tasks')
-        .select(`id: id, userId: user_id, title: title, description: description, assignedTo: assigned_to, isComplete: is_complete, deadline: deadline`)
+        .select(`id: id, userId: user_id, title: title, description: description, assignedTo: assigned_to, isComplete: is_complete, deadline: deadline, value: value`)
         .order('created_at', { ascending: false })
         .eq('user_id', userId)
 

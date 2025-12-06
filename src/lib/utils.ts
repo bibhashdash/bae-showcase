@@ -50,5 +50,6 @@ export interface Task {
     userId: string,
     deadline?: Date,
     assignedTo?: Array<string>,
+    value?: number
 }
 
