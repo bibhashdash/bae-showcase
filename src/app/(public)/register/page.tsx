@@ -36,49 +36,49 @@ export default function RegisterPage() {
                     <FieldGroup>
                         <Controller name="email" control={control} render={({field, fieldState}) => (
                             <Field data-invalid={fieldState.invalid}>
-                                <FieldLabel className="text-lg" htmlFor="email">Email</FieldLabel>
+                                <FieldLabel className="" htmlFor="email">Email</FieldLabel>
                                 <Input
                                     {...field}
                                     aria-invalid={fieldState.invalid}
                                     id="email"
                                     placeholder="Enter your email"
                                     autoComplete="email"
-                                    className="text-lg"
+                                    className=""
                                 />
                                 {fieldState.invalid && <FieldError errors={[fieldState.error]}/>}
                             </Field>
                         )}/>
                         <Controller name="password" control={control} render={({field, fieldState}) => (
                             <Field data-invalid={fieldState.invalid}>
-                                <FieldLabel className="text-lg" htmlFor="password">Password</FieldLabel>
+                                <FieldLabel className="" htmlFor="password">Password</FieldLabel>
                                 <Input
                                     type="password"
                                     id="password"
                                     placeholder="password"
                                     {...field}
                                     aria-invalid={fieldState.invalid}
-                                    className="text-lg"
+                                    className=""
                                 />
                                 {fieldState.invalid && <FieldError errors={[fieldState.error]}/>}
                             </Field>
                         )}/>
                         <Controller name="confirm" control={control} render={({field, fieldState}) => (
                             <Field data-invalid={fieldState.invalid}>
-                                <FieldLabel className="text-lg" htmlFor="confirm">Confirm Password</FieldLabel>
+                                <FieldLabel className="" htmlFor="confirm">Confirm Password</FieldLabel>
                                 <Input
                                     type="password"
                                     id="confirm"
                                     placeholder="password"
                                     {...field}
                                     aria-invalid={fieldState.invalid}
-                                    className="text-lg"
+                                    className=""
                                 />
                                 {fieldState.invalid && <FieldError errors={[fieldState.error]}/>}
                             </Field>
                         )}/>
                         <Field className="w-full">
-                            <Button className="text-lg" type="submit" form="registerForm">Register</Button>
-                            <FieldDescription className="text-center text-lg">
+                            <Button className="" type="submit" form="registerForm">Register</Button>
+                            <FieldDescription className="text-center ">
                                 Already have an account? <Link href="/login">Login</Link>
                             </FieldDescription>
                         </Field>

@@ -45,9 +45,9 @@ export const TaskAddEdit = ({userId, taskId, task, onCancelAction, onSubmitActio
             <div className="p-4">
                 <FieldGroup className="w-full">
                     <Field>
-                        <FieldLabel className="text-lg" htmlFor="title">Title</FieldLabel>
+                        <FieldLabel className=" " htmlFor="title">Title</FieldLabel>
                         <Input
-                            className="text-lg h-12"
+                            className="h-12"
                             value={title}
                             id="title"
                             onChange={(e) => setTitle(e.target.value)}
@@ -56,9 +56,9 @@ export const TaskAddEdit = ({userId, taskId, task, onCancelAction, onSubmitActio
                     </Field>
 
                     <Field>
-                        <FieldLabel className="text-lg" htmlFor="description">Description</FieldLabel>
+                        <FieldLabel className=" " htmlFor="description">Description</FieldLabel>
                         <Textarea
-                            className="text-lg"
+                            className=""
                             value={description}
                             id="description"
                             onChange={(e) => setDescription(e.target.value)}
@@ -67,20 +67,20 @@ export const TaskAddEdit = ({userId, taskId, task, onCancelAction, onSubmitActio
                     </Field>
 
                     <Field className="w-fit">
-                        <Label className="text-lg" htmlFor="is-complete">Complete?</Label>
-                        <div className="flex text-lg">
+                        <Label className=" " htmlFor="is-complete">Complete?</Label>
+                        <div className="flex  ">
                             <Switch onCheckedChange={setIsComplete} checked={isComplete} id="is-complete"/>
                         </div>
                     </Field>
 
                     <Field>
-                        <FieldLabel className="text-lg" htmlFor="deadline">Deadline</FieldLabel>
+                        <FieldLabel className=" " htmlFor="deadline">Deadline</FieldLabel>
                         <Popover open={openDatePicker} onOpenChange={setOpenDatePicker}>
                             <PopoverTrigger asChild>
                                 <Button
                                     variant="outline"
                                     id="date"
-                                    className="w-48 h-12 justify-between font-normal text-lg"
+                                    className="w-48 h-12 justify-between font-normal  "
                                 >
                                     {(deadline && true) ? new Date(deadline).toLocaleDateString() : "Select deadline"}
                                     <ChevronDownIcon/>
@@ -102,7 +102,7 @@ export const TaskAddEdit = ({userId, taskId, task, onCancelAction, onSubmitActio
                 </FieldGroup>
             </div>
             <div className="flex gap-2 justify-end p-4">
-                <Button size={"lg"} onClick={onCancelAction} className="cursor-pointer text-lg" variant="secondary">Cancel</Button>
+                <Button size={"lg"} onClick={onCancelAction} className="cursor-pointer  " variant="secondary">Cancel</Button>
                 <Button onClick={() => onSubmitAction({
                     userId: userId,
                     id: taskId !== undefined ? taskId : uuid(),
@@ -111,7 +111,7 @@ export const TaskAddEdit = ({userId, taskId, task, onCancelAction, onSubmitActio
                     isComplete: isComplete,
                     title: title,
                     description: description,
-                })} className="cursor-pointer text-lg" size={"lg"}>Submit</Button>
+                })} className="cursor-pointer  " size={"lg"}>Submit</Button>
             </div>
         </div>
     )

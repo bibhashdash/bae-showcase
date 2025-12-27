@@ -20,18 +20,18 @@ export const SignOutButton = () => {
             <DialogTrigger asChild>
                 <LogOutIcon size={24}/>
             </DialogTrigger>
-            <DialogContent className="text-lg">
+            <DialogContent className="">
                 <DialogHeader>
                     <DialogTitle>Sign Out?</DialogTitle>
                 </DialogHeader>
                 <DialogFooter>
                     <div className="w-full flex gap-2 justify-center">
                         <DialogClose asChild>
-                            <Button size={"lg"} type="button" variant="secondary" className="text-lg">
+                            <Button size={"lg"} type="button" variant="secondary" className="">
                                 Cancel
                             </Button>
                         </DialogClose>
-                        <Button size={"lg"} className="text-lg" onClick={() => signOut().then(redirect("/login"))}>Confirm</Button>
+                        <Button size={"lg"} className="" onClick={() => signOut().then(redirect("/login"))}>Confirm</Button>
                     </div>
                 </DialogFooter>
             </DialogContent>

@@ -37,37 +37,37 @@ export default function LoginPage({}) {
                     <FieldGroup>
                         <Controller name="email" control={control} render={({field, fieldState}) => (
                             <Field data-invalid={fieldState.invalid}>
-                                <FieldLabel className="text-lg" htmlFor="email">Email</FieldLabel>
+                                <FieldLabel className="" htmlFor="email">Email</FieldLabel>
                                 <Input
                                     {...field}
                                     aria-invalid={fieldState.invalid}
                                     id="email"
                                     placeholder="Enter your email"
                                     autoComplete="email"
-                                    className="text-lg"
+                                    className=""
                                 />
                                 {fieldState.invalid && <FieldError errors={[fieldState.error]}/>}
                             </Field>
                         )}/>
                         <Controller name="password" control={control} render={({field, fieldState}) => (
                             <Field data-invalid={fieldState.invalid}>
-                                <FieldLabel className="text-lg" htmlFor="password">Password</FieldLabel>
+                                <FieldLabel className="" htmlFor="password">Password</FieldLabel>
                                 <Input
                                     type="password"
                                     id="password"
                                     placeholder="password"
                                     {...field}
                                     aria-invalid={fieldState.invalid}
-                                    className="text-lg"
+                                    className=""
                                 />
                                 {fieldState.invalid && <FieldError errors={[fieldState.error]}/>}
                             </Field>
                         )}/>
                         <Field className="w-full">
-                            <Button className="cursor-pointer text-lg" size={"lg"} type="submit">
+                            <Button className="cursor-pointer " size={"lg"} type="submit">
                                 Login
                             </Button>
-                            <FieldDescription className="text-center text-lg">
+                            <FieldDescription className="text-center ">
                                 Don&apos;t have an account? <Link href="/register">Sign up</Link>
                             </FieldDescription>
                         </Field>

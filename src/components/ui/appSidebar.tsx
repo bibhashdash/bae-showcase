@@ -15,43 +15,62 @@ import {Avatar, AvatarFallback,} from "@/components/ui/avatar"
 import {ArrowRightLeft, ClipboardList, Home, SettingsIcon, Sticker, Trophy, UserIcon} from "lucide-react";
 import Link from "next/link";
 import {User} from "@/lib/utils";
+import {usePathname} from "next/navigation";
 
 export const AppSidebar = ({user}: { user: User }) => {
-    const {toggleSidebar} = useSidebar()
+    const {toggleSidebar, isMobile} = useSidebar()
+    const pathname = usePathname()
+
     return (
         <Sidebar variant="inset" collapsible="offcanvas" className="px-2 p-4">
             <SidebarHeader>
                 <div className="flex gap-2 p-4 items-center">
                     <Sticker/>
-                    <p className="font-bold text-lg">Together</p>
+                    <p className="font-bold">Together</p>
                 </div>
             </SidebarHeader>
             <SidebarContent className="p-4">
 
                 <SidebarGroup>
                     <SidebarGroupContent>
-                        <SidebarMenu className="flex flex-col gap-6 text-lg">
-                            <Link href={`/${user.userId}/dashboard`} onClick={() => toggleSidebar()}>
-                                <SidebarMenuItem className="flex gap-2 items-center ">
+                        <SidebarMenu className="flex flex-col gap-6">
+                            <Link href={`/${user.userId}/dashboard`} onClick={() => {
+                                if (isMobile) {
+                                    toggleSidebar()
+                                }
+                            }}>
+                                <SidebarMenuItem className={`flex gap-2 items-center py-2 ${pathname.includes("dashboard") ? "border-b-2" : ""}`}>
                                     <Home/>
                                     Dashboard
 
                                 </SidebarMenuItem>
                             </Link>
-                            <Link href={`/${user.userId}/today`} onClick={() => toggleSidebar()}>
-                                <SidebarMenuItem className="flex gap-2 items-center">
+                            <Link href={`/${user.userId}/today`} onClick={() => {
+                                if (isMobile) {
+                                    toggleSidebar()
+                                }
+                            }}>
+                                <SidebarMenuItem className={`flex gap-2 items-center py-2 ${pathname.includes("today") ? "border-b-2" : ""}`}>
                                     <ClipboardList/>
                                     Tasks
                                 </SidebarMenuItem>
                             </Link>
-                            <Link href={`/${user.userId}/trades`} onClick={() => toggleSidebar()}>
-                                <SidebarMenuItem className="flex gap-2 items-center">
+                            <Link href={`/${user.userId}/trades`} onClick={() => {
+                                if (isMobile) {
+                                    toggleSidebar()
+                                }
+                            }}>
+                                <SidebarMenuItem className={`flex gap-2 items-center py-2 ${pathname.includes("trades") ? "border-b-2" : ""}`}>
                                     <ArrowRightLeft />
                                     Trades
                                 </SidebarMenuItem>
                             </Link>
-                            <Link href={`/${user.userId}/inventory`} onClick={() => toggleSidebar()}>
-                                <SidebarMenuItem className="flex gap-2 items-center">
+                            <Link href={`/${user.userId}/inventory`} onClick={() => {
+                                if (isMobile) {
+                                    toggleSidebar()
+                                }
+                            }}>
+                                <SidebarMenuItem className={`flex gap-2 items-center py-2 ${pathname.includes("inventory") ? "border-b-2" : ""}`}>
                                     <Trophy />
                                     Inventory
                                 </SidebarMenuItem>
