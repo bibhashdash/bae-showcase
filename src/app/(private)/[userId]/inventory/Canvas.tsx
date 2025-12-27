@@ -70,11 +70,11 @@ export const Canvas = () => {
                 fitView
                 nodeTypes={nodeTypes}
             >
-                <Background variant={BackgroundVariant.Lines} />
+                <Background variant={BackgroundVariant.Cross} />
                 <Controls />
             </ReactFlow>
             <div className="flex items-center gap-y-2 mt-4">
-                {/*<Button onClick={() => addNode()}>Add Node</Button>*/}
+                <Button onClick={() => addNode("")}>Add Node</Button>
                 <Button onClick={() => addNode('decision')}>Add Decision Box</Button>
             </div>
         </div>
