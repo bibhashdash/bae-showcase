@@ -39,7 +39,7 @@ export const AppSidebar = ({user}: { user: User }) => {
                                     toggleSidebar()
                                 }
                             }}>
-                                <SidebarMenuItem className={`flex gap-2 items-center py-2 ${pathname.includes("dashboard") ? "border-b-2" : ""}`}>
+                                <SidebarMenuItem className={`flex gap-2 items-center py-2 ${pathname.includes("dashboard") ? "font-semibold" : ""}`}>
                                     <Home/>
                                     Dashboard
 
@@ -50,7 +50,7 @@ export const AppSidebar = ({user}: { user: User }) => {
                                     toggleSidebar()
                                 }
                             }}>
-                                <SidebarMenuItem className={`flex gap-2 items-center py-2 ${pathname.includes("today") ? "border-b-2" : ""}`}>
+                                <SidebarMenuItem className={`flex gap-2 items-center py-2 ${pathname.includes("today") ? "font-semibold" : ""}`}>
                                     <ClipboardList/>
                                     Tasks
                                 </SidebarMenuItem>
@@ -60,7 +60,7 @@ export const AppSidebar = ({user}: { user: User }) => {
                                     toggleSidebar()
                                 }
                             }}>
-                                <SidebarMenuItem className={`flex gap-2 items-center py-2 ${pathname.includes("trades") ? "border-b-2" : ""}`}>
+                                <SidebarMenuItem className={`flex gap-2 items-center py-2 ${pathname.includes("trades") ? "font-semibold" : ""}`}>
                                     <ArrowRightLeft />
                                     Trades
                                 </SidebarMenuItem>
@@ -70,7 +70,7 @@ export const AppSidebar = ({user}: { user: User }) => {
                                     toggleSidebar()
                                 }
                             }}>
-                                <SidebarMenuItem className={`flex gap-2 items-center py-2 ${pathname.includes("inventory") ? "border-b-2" : ""}`}>
+                                <SidebarMenuItem className={`flex gap-2 items-center py-2 ${pathname.includes("inventory") ? "font-semibold" : ""}`}>
                                     <Trophy />
                                     Inventory
                                 </SidebarMenuItem>
