@@ -51,7 +51,7 @@ export const getUserProfile = async(id: string): Promise<User> => {
     try {
         const { data, error, status } = await supabase
             .from('profiles')
-            .select(`userId: user_id, fullName: full_name, username: username, bio: bio, userRole: user_role`)
+            .select(`id: id, userId: user_id, fullName: full_name, username: username, bio: bio, userRole: user_role, organisationId: organisation_id`)
             .eq('user_id', id)
             .single()
         if (error && status !== 406) {

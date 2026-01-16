@@ -1,4 +1,4 @@
-import {Task} from "@/lib/utils";
+import {RideFormSchema} from "@/lib/utils";
 import {createClient} from "@/lib/supabase/client";
 import {error} from "next/dist/build/output/log";
 
@@ -7,34 +7,36 @@ export const signOut = async(): Promise<void> => {
     await supabase.auth.signOut();
 }
 
-export const updateUserTask = async(task: Task): Promise<void> => {
+export const getAllRides = async(organisationId: string): Promise<Array<RideFormSchema>> => {
     const supabase = createClient();
+
     try {
         const { data, error, status } = await supabase
-            .from('tasks')
-            .update({title: task.title, description: task.description, is_complete: task.isComplete, deadline: task.deadline, assigned_to: task.assignedTo})
-            .eq('id', task.id)
-        if (error && status !== 406) {
+            .from('rides')
+            .select(`id: id, userId: user_id, title: title, description: description, time: time, start: start, destination: destination, routeUrl: route_url, attendanceList: attendance_list, pace: pace, distance: distance, isOfficialClubRide: is_official_club_ride, date: date)`)
+            .eq("organisation_id", organisationId)
+        if (error) {
             console.log(error);
-            throw new Error('Error updating task');
+            throw new Error('Error fetching rides');
         }
         if (!data) {
 
-            throw new Error('Error updating task');
+            throw new Error('Error fetching rides');
         }
+        return (data as unknown as RideFormSchema[]) || [];
     } catch (err) {
-        console.log(error);
-        // throw new Error('Error updating task');
+        console.error('Validation or Connection Error:', err);
+        throw err;
     }
 }
 
-export const addUserTask = async(task: Task): Promise<Task> => {
+export const addRide = async(ride: RideFormSchema): Promise<RideFormSchema> => {
     const supabase = createClient();
     try {
         const { data, error, status } = await supabase
-            .from('tasks')
-            .insert({title: task.title, description: task.description, is_complete: task.isComplete, deadline: task.deadline, assigned_to: task.assignedTo})
-            .select(`id: id, userId: user_id, title: title, description: description, assignedTo: assigned_to, isComplete: is_complete, deadline: deadline`)
+            .from('rides')
+            .insert({title: ride.title, description: ride.description, time: ride.time, date: ride.date, start: ride.start, destination: ride.destination, route_url: ride.routeUrl, pace: ride.pace, distance: ride.distance, is_official_club_ride: ride.isOfficialClubRide})
+            .select(`id: id, userId: user_id, title: title, description: description, time: time, start: start, destination: destination, routeUrl: route_url, attendanceList: attendance_list, pace: pace, distance: distance, isOfficialClubRide: is_official_club_ride) `)
             .single()
         if (error && status !== 406) {
             console.log(error);
@@ -44,42 +46,9 @@ export const addUserTask = async(task: Task): Promise<Task> => {
 
             throw new Error('Error adding task');
         }
-        return data
+        return data as unknown as RideFormSchema
     } catch (err) {
         console.log(error);
         throw new Error('Error adding task');
-    }
-}
-
-export const deleteUserTask = async(id: string): Promise<void> => {
-    const supabase = createClient();
-    try {
-        await supabase
-        .from('tasks')
-            .delete()
-        .eq('id', id)
-    } catch (err) {
-        throw err;
-    }
-}
-
-export const markTaskCompletion = async(id: string, isComplete: boolean): Promise<void> => {
-    const supabase = createClient();
-    try {
-        const { data, error, status } = await supabase
-            .from('tasks')
-            .update({is_complete: isComplete})
-            .eq('id', id)
-        if (error && status !== 406) {
-            console.log(error);
-            throw new Error('Error updating task');
-        }
-        if (!data) {
-
-            throw new Error('Error updating task');
-        }
-    } catch (err) {
-        console.log(error);
-        // throw new Error('Error updating task');
     }
 }
