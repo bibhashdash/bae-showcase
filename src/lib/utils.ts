@@ -55,7 +55,9 @@ export interface RideFormSchema {
     attendanceList: Array<string>,
     pace: string,
     distance: number,
-    isOfficialClubRide: boolean
+    isOfficialClubRide: boolean,
+    leader: string,
+    organisationId: string,
 }
 
 // export const RidesArraySchema = z.array(RideFormSchema);

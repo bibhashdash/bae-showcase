@@ -1,29 +1,32 @@
 "use client";
-import {useState} from "react";
+import {useEffect, useState} from "react";
 import {Field, FieldError, FieldGroup, FieldLabel} from "@/components/ui/field";
 import {Controller, useForm} from "react-hook-form";
 import {Input} from "@/components/ui/input";
 import {Button} from "@/components/ui/button";
-import {RideFormSchema} from "@/lib/utils";
+import {RideFormSchema, User} from "@/lib/utils";
 import {Textarea} from "@/components/ui/textarea"
 import {ChevronDownIcon} from "lucide-react"
 import {Calendar} from "@/components/ui/calendar"
 import {Popover, PopoverContent, PopoverTrigger,} from "@/components/ui/popover"
 import {Select, SelectContent, SelectItem, SelectTrigger, SelectValue,} from "@/components/ui/select"
-import {addRide} from "@/lib/supabase/api";
+import {addRide, getAllClubMembers} from "@/lib/supabase/api";
 import {Switch} from "@/components/ui/switch";
 
-export const NewRide = ({}) => {
+export const NewRide = ({user}: {user: User}) => {
     const [open, setOpen] = useState(false)
-
+    const [users, setUsers] = useState<Array<User>>([])
     const {control, handleSubmit} = useForm<RideFormSchema>({
         mode: "onSubmit",
     })
-    const onSubmit = async (data: RideFormSchema) => {
-        await addRide(data)
+    const onSubmit = async (data: RideFormSchema, orgId: string) => {
+        await addRide({...data, organisationId: orgId})
     }
+    useEffect(() => {
+        getAllClubMembers(user.organisationId).then(result => setUsers(result))
+    }, [])
     return (
-        <form onSubmit={handleSubmit(onSubmit)} name="login-form" className="overflow-hidden overflow-y-auto">
+        <form onSubmit={handleSubmit(data => onSubmit(data, user.organisationId))} name="login-form" className="overflow-hidden overflow-y-auto">
             <FieldGroup>
                 <Controller name="date" control={control} render={({field, fieldState}) => (
                     <Field data-invalid={fieldState.invalid}>
@@ -149,10 +152,36 @@ export const NewRide = ({}) => {
                         {fieldState.invalid && <FieldError errors={[fieldState.error]}/>}
                     </Field>
                 )}/>
-                <Controller name="isOfficialClubRide" control={control} render={({field, fieldState}) => (
+                <Controller name="leader" control={control} render={({field, fieldState}) => (
                     <Field data-invalid={fieldState.invalid}>
-                        <FieldLabel className="" htmlFor="official-club-ride">Description</FieldLabel>
-                        <Switch id="official-club-ride" />
+                        <FieldLabel htmlFor="pace">Ride Leader</FieldLabel>
+                        <Select {...field}
+                                value={field.value}
+                                aria-invalid={fieldState.invalid}
+                                name="leader"
+                                onValueChange={v => field.onChange(v)}
+                        >
+                            <SelectTrigger className="w-[180px]">
+                                <SelectValue defaultValue={field.value} />
+                            </SelectTrigger>
+                            <SelectContent>
+                                {
+                                    users && users.length > 0 &&
+                                    users.map(
+                                        item => <SelectItem key={item.id} value={item.userId}>{item.fullName}</SelectItem>
+                                    )
+                                }
+                            </SelectContent>
+                        </Select>
+                        {fieldState.invalid && <FieldError errors={[fieldState.error]}/>}
+                    </Field>
+                )}/>
+                <Controller name="isOfficialClubRide" control={control} render={({field, fieldState}) => (
+                    <Field data-invalid={fieldState.invalid} className="flex items-center">
+                        <FieldLabel className="" htmlFor="official-club-ride">Official Club Ride</FieldLabel>
+                        <div>
+                            <Switch id="official-club-ride" {...field} checked={field.value} value=""  aria-invalid={fieldState.invalid} />
+                        </div>
                         {/*<Textarea*/}
                         {/*    id="description"*/}
                         {/*    placeholder="Enter a description"*/}

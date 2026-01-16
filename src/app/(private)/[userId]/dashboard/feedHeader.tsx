@@ -11,8 +11,9 @@ import {
     DialogTrigger,
 } from "@/components/ui/dialog"
 import {NewRide} from "@/app/(private)/[userId]/dashboard/newRide";
+import {User} from "@/lib/utils";
 
-export const FeedHeader = ({}) => {
+export const FeedHeader = ({user}: {user: User}) => {
     return (
         <div className="flex gap-4 items-center w-full p-2">
             <div className="flex items-center w-100 gap-1">
@@ -25,7 +26,7 @@ export const FeedHeader = ({}) => {
                     <DialogHeader>
                         <DialogTitle>New Ride</DialogTitle>
                     </DialogHeader>
-                    <NewRide />
+                    <NewRide user={user} />
                     <DialogFooter className="sm:justify-start">
                         <DialogClose asChild>
                             <Button type="button" variant="secondary">
