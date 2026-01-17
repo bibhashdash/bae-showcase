@@ -23,7 +23,7 @@ export const NewRide = ({user}: {user: User}) => {
         await addRide({...data, organisationId: orgId})
     }
     useEffect(() => {
-        getAllClubMembers(user.organisationId).then(result => setUsers(result))
+        getAllClubMembers().then(result => setUsers(result))
     }, [])
     return (
         <form onSubmit={handleSubmit(data => onSubmit(data, user.organisationId))} name="login-form" className="overflow-hidden overflow-y-auto">
@@ -180,14 +180,8 @@ export const NewRide = ({user}: {user: User}) => {
                     <Field data-invalid={fieldState.invalid} className="flex items-center">
                         <FieldLabel className="" htmlFor="official-club-ride">Official Club Ride</FieldLabel>
                         <div>
-                            <Switch id="official-club-ride" {...field} checked={field.value} value=""  aria-invalid={fieldState.invalid} />
+                            <Switch onCheckedChange={checked => field.onChange(checked)} id="official-club-ride" {...field} checked={field.value} value=""  aria-invalid={fieldState.invalid} />
                         </div>
-                        {/*<Textarea*/}
-                        {/*    id="description"*/}
-                        {/*    placeholder="Enter a description"*/}
-                        {/*    {...field}*/}
-                        {/*    aria-invalid={fieldState.invalid}*/}
-                        {/*/>*/}
                         {fieldState.invalid && <FieldError errors={[fieldState.error]}/>}
                     </Field>
                 )}/>

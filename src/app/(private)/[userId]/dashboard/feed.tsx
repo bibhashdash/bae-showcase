@@ -1,21 +1,35 @@
 "use client"
 import {RideFormSchema, User} from "@/lib/utils";
-import {getAllRides} from "@/lib/supabase/api";
+import {getAllRides, getRide, updateRideAttendance} from "@/lib/supabase/api";
 import {useEffect, useState} from "react";
 import {RideDetailsSummaryCard} from "@/app/(private)/[userId]/dashboard/rideSummaryCard";
 
-export const Feed = ({user}: {user: User}) => {
+export const Feed = ({user}: { user: User }) => {
     const [allRides, setAllRides] = useState<Array<RideFormSchema>>([]);
 
     useEffect(() => {
-        getAllRides(user.organisationId).then(result => setAllRides(result));
+        getAllRides().then(result => {
+            setAllRides(result)
+        });
     }, []);
+
+
+    const handleAttendanceClick = (isAttending: boolean, rideId: string) => {
+        updateRideAttendance(isAttending, user.organisationId, user.userId, rideId)
+            .then(() => getAllRides().then(result => setAllRides(result)))
+    }
+
     return (
         <div className="pt-2">
             {
-                allRides
-                    .map((ride: RideFormSchema) => <RideDetailsSummaryCard key={ride.id} ride={ride}/>
-                    )
+                allRides.length > 0 && allRides.map((ride: RideFormSchema, index) =>
+                    <RideDetailsSummaryCard
+                        key={ride?.id}
+                        userId={user.userId}
+                        onAttendanceClick={isAttending => handleAttendanceClick(isAttending, ride.id)}
+                        ride={ride}
+                    />
+                )
             }
         </div>
     )

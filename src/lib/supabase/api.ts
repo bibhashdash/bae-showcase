@@ -7,37 +7,44 @@ export const signOut = async(): Promise<void> => {
     await supabase.auth.signOut();
 }
 
-export const getAllRides = async(organisationId: string): Promise<Array<RideFormSchema>> => {
+export const getAllRides = async(): Promise<Array<RideFormSchema>> => {
     const supabase = createClient();
 
     try {
         const { data, error, status } = await supabase
             .from('rides')
-            .select(`id: id, userId: user_id, title: title, description: description, time: time, start: start, destination: destination, routeUrl: route_url, attendanceList: attendance_list, pace: pace, distance: distance, isOfficialClubRide: is_official_club_ride, date: date)`)
-            .eq("organisation_id", organisationId)
+            .select(`id: id, userId: user_id, title: title, description: description, time: time, start: start, destination: destination, routeUrl: route_url, attendanceList: attendance_list(user_id), pace: pace, distance: distance, isOfficialClubRide: is_official_club_ride, date: date)`)
+            .order('title', {ascending: true})
         if (error) {
             console.log(error);
             throw new Error('Error fetching rides');
         }
         if (!data) {
-
             throw new Error('Error fetching rides');
         }
-        return (data as unknown as RideFormSchema[]) || [];
+        const rides = data as unknown
+        // @ts-ignore
+        return rides.map(
+            (item: { attendanceList: any[]; }) => ({
+                ...item,
+                attendanceList: item.attendanceList.map((attendance) => attendance.user_id)
+            })
+        )
     } catch (err) {
         console.error('Validation or Connection Error:', err);
         throw err;
     }
 }
 
-export const getAllClubMembers = async(organisationId: string): Promise<Array<User>> => {
+export const getAllClubMembers = async(): Promise<Array<User>> => {
     const supabase = createClient();
 
     try {
         const { data, error, status } = await supabase
             .from('profiles')
             .select(`id: id, userId: user_id, fullName: full_name, username: username, bio: bio, userRole: user_role, organisationId: organisation_id`)
-            .eq("organisation_id", organisationId)
+
+        //   .returns<Array<MyType>>()
         if (error) {
             console.log(error);
             throw new Error('Error fetching rides');
@@ -56,7 +63,6 @@ export const getAllClubMembers = async(organisationId: string): Promise<Array<Us
 export const addRide = async(ride: RideFormSchema): Promise<RideFormSchema> => {
     const supabase = createClient();
     try {
-        console.log(ride)
         const { data, error, status } = await supabase
             .from('rides')
             .insert({title: ride.title, description: ride.description, time: ride.time, date: ride.date, start: ride.start, destination: ride.destination, route_url: ride.routeUrl, pace: ride.pace, distance: ride.distance, is_official_club_ride: ride.isOfficialClubRide, leader: ride.leader, organisation_id: ride.organisationId})
@@ -74,5 +80,66 @@ export const addRide = async(ride: RideFormSchema): Promise<RideFormSchema> => {
     } catch (err) {
         console.log(error);
         throw new Error('Error adding task');
+    }
+}
+
+export const getRide = async (rideId: string, organisationId: string): Promise<RideFormSchema> => {
+    const supabase = createClient();
+    try {
+        const {data, error, status} = await supabase
+            .from('rides')
+            .select(`id: id, userId: user_id, title: title, description: description, time: time, start: start, destination: destination, routeUrl: route_url, attendanceList: attendance_list, pace: pace, distance: distance, isOfficialClubRide: is_official_club_ride, date: date)`)
+            .eq("organisation_id", organisationId)
+            .limit(1)
+            .single()
+        if (error && status !== 406) {
+            console.log(error);
+            throw new Error('Error adding task');
+        }
+        if (!data) {
+
+            throw new Error('Error adding task');
+        }
+        return data as unknown as RideFormSchema
+    } catch(err) {
+        console.error('Validation or Connection Error:', err);
+        throw err;
+    }
+}
+
+export const updateRideAttendance = async (isAttending: boolean, organisationId: string, userId: string, rideId: string) => {
+    const supabase = createClient();
+    try {
+        if (isAttending) {
+            const { data, error, status } = await supabase
+                .from('attendance_list')
+                .insert({ride_id: rideId, user_id: userId, organisation_id: organisationId})
+            if (error && status !== 406) {
+                console.log(error);
+                throw new Error('Error updating task');
+            }
+            return data
+        }
+        else {
+            const { data, error, status } = await supabase
+                .from('attendance_list')
+                .delete()
+                .match(
+                    {
+                        ride_id: rideId,
+                        user_id: userId,
+                    }
+                )
+
+            if (error && status !== 406) {
+                console.log(error);
+                throw new Error('Error updating task');
+            }
+            return data
+        }
+
+    } catch(err) {
+        console.error('Validation or Connection Error:', err);
+        throw err;
     }
 }
