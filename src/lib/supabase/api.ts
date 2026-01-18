@@ -66,7 +66,7 @@ export const addRide = async(ride: RideFormSchema): Promise<RideFormSchema> => {
         const { data, error, status } = await supabase
             .from('rides')
             .insert({title: ride.title, description: ride.description, time: ride.time, date: ride.date, start: ride.start, destination: ride.destination, route_url: ride.routeUrl, pace: ride.pace, distance: ride.distance, is_official_club_ride: ride.isOfficialClubRide, leader: ride.leader, organisation_id: ride.organisationId})
-            .select(`id: id, userId: user_id, title: title, description: description, time: time, start: start, destination: destination, routeUrl: route_url, attendanceList: attendance_list, pace: pace, distance: distance, isOfficialClubRide: is_official_club_ride) `)
+            .select(`id: id, userId: user_id, title: title, description: description, time: time, start: start, destination: destination, routeUrl: route_url, attendanceList: attendance_list(user_id), pace: pace, distance: distance, isOfficialClubRide: is_official_club_ride`)
             .single()
         if (error && status !== 406) {
             console.log(error);
@@ -76,21 +76,26 @@ export const addRide = async(ride: RideFormSchema): Promise<RideFormSchema> => {
 
             throw new Error('Error adding task');
         }
-        return data as unknown as RideFormSchema
+
+        const formattedData = {
+            ...data,
+            attendanceList: data.attendanceList?.map((item: any) => item.user_id) || []
+        };
+
+        return formattedData as unknown as RideFormSchema;
     } catch (err) {
         console.log(error);
         throw new Error('Error adding task');
     }
 }
 
-export const getRide = async (rideId: string, organisationId: string): Promise<RideFormSchema> => {
+export const getRide = async (rideId: string): Promise<RideFormSchema> => {
     const supabase = createClient();
     try {
         const {data, error, status} = await supabase
             .from('rides')
-            .select(`id: id, userId: user_id, title: title, description: description, time: time, start: start, destination: destination, routeUrl: route_url, attendanceList: attendance_list, pace: pace, distance: distance, isOfficialClubRide: is_official_club_ride, date: date)`)
-            .eq("organisation_id", organisationId)
-            .limit(1)
+            .select(`id: id, userId: user_id, title: title, description: description, time: time, start: start, destination: destination, attendanceList: attendance_list(user_id), routeUrl: route_url, pace: pace, distance: distance, isOfficialClubRide: is_official_club_ride, date: date`)
+            .eq("id", rideId)
             .single()
         if (error && status !== 406) {
             console.log(error);
@@ -100,7 +105,13 @@ export const getRide = async (rideId: string, organisationId: string): Promise<R
 
             throw new Error('Error adding task');
         }
-        return data as unknown as RideFormSchema
+
+        const formattedData = {
+            ...data,
+            attendanceList: data.attendanceList?.map((item: any) => item.user_id) || []
+        };
+
+        return formattedData as unknown as RideFormSchema;
     } catch(err) {
         console.error('Validation or Connection Error:', err);
         throw err;

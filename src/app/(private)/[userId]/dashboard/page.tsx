@@ -11,9 +11,11 @@ export default async function Dashboard() {
         redirect('/login')
     }
 
+
+
     const userProfile = await getUserProfile(userData.user.id)
     return <div className="">
         <FeedHeader user={userProfile} />
-        <Feed user={userProfile} />
+        <Feed user={userProfile} organisationId={userData.user.app_metadata.organisation_id} />
     </div>
 }

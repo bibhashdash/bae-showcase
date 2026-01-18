@@ -5,17 +5,19 @@ import {RideFormSchema} from "@/lib/utils";
 import {Badge} from "@/components/ui/badge";
 import {ChevronRight, Navigation, PlayCircleIcon, Route, Ruler, X} from "lucide-react";
 import {Button} from "@/components/ui/button";
+import {redirect} from "next/navigation";
 
 interface RideSummaryProps {
     ride: RideFormSchema,
     onAttendanceClick: (isAttending: boolean) => void,
     userId: string,
+    organisationId: string,
 }
 
 
-export const RideDetailsSummaryCard = ({ride, onAttendanceClick, userId}: RideSummaryProps) => {
+export const RideDetailsSummaryCard = ({ride, onAttendanceClick, userId, organisationId}: RideSummaryProps) => {
     return (
-        <Card className="rounded-none shadow-none">
+        <Card onClick={() => redirect(`/${organisationId}/rides/${ride.id}`)} className="rounded-none shadow-none">
             <div className="h-36 relative">
                 <img className="h-full w-full object-cover transition-transform duration-500 group-hover:scale-105"
                      src="/ride-details-placeholder.png" alt="ride details placeholder"/>

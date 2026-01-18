@@ -17,7 +17,7 @@ export async function login (formData: unknown) {
         redirect('/error')
     }
     revalidatePath('/', 'layout')
-    redirect(`/${data.user?.id}/dashboard`)
+    redirect(`/${data.user?.app_metadata.organisation_id}/dashboard`)
 }
 
 export async function signup(formData: unknown) {
