@@ -14,6 +14,7 @@ export interface User {
     fullName: string,
     userRole: number,
     organisationId: string,
+    role: string,
 }
 
 export interface Error {
@@ -58,6 +59,7 @@ export interface RideFormSchema {
     isOfficialClubRide: boolean,
     leader: string,
     organisationId: string,
+    rideType: string,
 }
 
 // export const RidesArraySchema = z.array(RideFormSchema);

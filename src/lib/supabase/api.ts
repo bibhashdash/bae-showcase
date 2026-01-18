@@ -65,8 +65,8 @@ export const addRide = async(ride: RideFormSchema): Promise<RideFormSchema> => {
     try {
         const { data, error, status } = await supabase
             .from('rides')
-            .insert({title: ride.title, description: ride.description, time: ride.time, date: ride.date, start: ride.start, destination: ride.destination, route_url: ride.routeUrl, pace: ride.pace, distance: ride.distance, is_official_club_ride: ride.isOfficialClubRide, leader: ride.leader, organisation_id: ride.organisationId})
-            .select(`id: id, userId: user_id, title: title, description: description, time: time, start: start, destination: destination, routeUrl: route_url, attendanceList: attendance_list(user_id), pace: pace, distance: distance, isOfficialClubRide: is_official_club_ride`)
+            .insert({title: ride.title, ride_type: ride.rideType, description: ride.description, time: ride.time, date: ride.date, start: ride.start, destination: ride.destination, route_url: ride.routeUrl, pace: ride.pace, distance: ride.distance, is_official_club_ride: ride.isOfficialClubRide, leader: ride.leader, organisation_id: ride.organisationId})
+            .select(`id: id, userId: user_id, title: title, rideType: ride_type, description: description, time: time, start: start, destination: destination, routeUrl: route_url, attendanceList: attendance_list(user_id), pace: pace, distance: distance, isOfficialClubRide: is_official_club_ride`)
             .single()
         if (error && status !== 406) {
             console.log(error);
@@ -94,7 +94,7 @@ export const getRide = async (rideId: string): Promise<RideFormSchema> => {
     try {
         const {data, error, status} = await supabase
             .from('rides')
-            .select(`id: id, userId: user_id, title: title, description: description, time: time, start: start, destination: destination, attendanceList: attendance_list(user_id), routeUrl: route_url, pace: pace, distance: distance, isOfficialClubRide: is_official_club_ride, date: date`)
+            .select(`id: id, userId: user_id, title: title, rideType: ride_type, description: description, time: time, start: start, destination: destination, attendanceList: attendance_list(user_id), routeUrl: route_url, pace: pace, distance: distance, isOfficialClubRide: is_official_club_ride, date: date`)
             .eq("id", rideId)
             .single()
         if (error && status !== 406) {

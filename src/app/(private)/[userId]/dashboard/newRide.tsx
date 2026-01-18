@@ -85,6 +85,28 @@ export const NewRide = ({user}: {user: User}) => {
                         {fieldState.invalid && <FieldError errors={[fieldState.error]}/>}
                     </Field>
                 )}/>
+                <Controller name="rideType" control={control} render={({field, fieldState}) => (
+                    <Field data-invalid={fieldState.invalid}>
+                        <FieldLabel htmlFor="rideType">Terrain</FieldLabel>
+                        <Select {...field}
+                                value={field.value}
+                                aria-invalid={fieldState.invalid}
+                                name="rideType"
+                                onValueChange={v => field.onChange(v)}
+                        >
+                            <SelectTrigger className="w-[180px]">
+                                <SelectValue defaultValue={field.value} />
+                            </SelectTrigger>
+                            <SelectContent>
+                                <SelectItem value="road">Road</SelectItem>
+                                <SelectItem value="gravel">Gravel</SelectItem>
+                                <SelectItem value="mountain">Mountain</SelectItem>
+                                <SelectItem value="mixed">Mixed</SelectItem>
+                            </SelectContent>
+                        </Select>
+                        {fieldState.invalid && <FieldError errors={[fieldState.error]}/>}
+                    </Field>
+                )}/>
                 <Controller name="start" control={control} render={({field, fieldState}) => (
                     <Field data-invalid={fieldState.invalid}>
                         <FieldLabel htmlFor="start">Start</FieldLabel>
