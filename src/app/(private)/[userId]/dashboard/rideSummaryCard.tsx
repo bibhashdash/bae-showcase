@@ -3,7 +3,7 @@ import dayjs from 'dayjs';
 import {Card, CardContent, CardHeader, CardTitle} from "@/components/ui/card";
 import {RideFormSchema} from "@/lib/utils";
 import {Badge} from "@/components/ui/badge";
-import {ChevronRight, Navigation, PlayCircleIcon, Route, Ruler, X} from "lucide-react";
+import {ChevronRight, MapPin, Navigation, PlayCircleIcon, Route, Ruler, X} from "lucide-react";
 import {Button} from "@/components/ui/button";
 import {redirect} from "next/navigation";
 
@@ -40,7 +40,7 @@ export const RideDetailsSummaryCard = ({ride, onAttendanceClick, userId, organis
             <CardContent>
                 <div className="flex items-center justify-stretch mb-2">
                     <div className="flex gap-1 items-center text-gray-400 font-light w-full">
-                        <PlayCircleIcon size={18}/>
+                        <MapPin size={18} />
                         <p>{ride.start}</p>
                     </div>
                     <div className="flex gap-1 items-center text-gray-400 font-light w-full">

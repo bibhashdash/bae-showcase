@@ -48,7 +48,6 @@ export const NewRide = ({user}: {user: User}) => {
                                     selected={new Date(field.value)}
                                     captionLayout="dropdown"
                                     onSelect={(date) => {
-                                        console.log(date, typeof date)
                                         field.onChange(date)
                                         setOpen(false)
                                     }}
@@ -67,6 +66,8 @@ export const NewRide = ({user}: {user: User}) => {
                             id="time"
                             type="time"
                             step="1"
+                            defaultValue="00:00:00"
+                            onChange={e => field.onChange(e.target.value)}
                             className="bg-background appearance-none [&::-webkit-calendar-picker-indicator]:hidden [&::-webkit-calendar-picker-indicator]:appearance-none"
                         />
                         {fieldState.invalid && <FieldError errors={[fieldState.error]}/>}
