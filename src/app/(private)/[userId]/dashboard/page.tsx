@@ -14,7 +14,7 @@ export default async function Dashboard() {
 
     const userProfile = await getUserProfile(userData.user.id)
     return <div className="">
-        {/*<FeedHeader user={userProfile} />*/}
+        <h1 className="px-2 font-semibold text-2xl">Upcoming Rides</h1>
         <Feed user={userProfile} organisationId={userData.user.app_metadata.organisation_id} />
     </div>
 }

@@ -11,8 +11,12 @@ export default async function Rides () {
     }
     const userProfile = await getUserProfile(data.user.id);
     return (
-        <div className="px-2 py-2">
-            <NewRide user={userProfile}/>
+        <div>
+            <h1 className="px-2 font-semibold text-2xl">Add a new ride</h1>
+
+            <div className="px-2 py-2 h-full">
+                <NewRide user={userProfile}/>
+            </div>
         </div>
     )
 }
