@@ -12,6 +12,7 @@ import {Popover, PopoverContent, PopoverTrigger,} from "@/components/ui/popover"
 import {Select, SelectContent, SelectItem, SelectTrigger, SelectValue,} from "@/components/ui/select"
 import {addRide, getAllClubMembers} from "@/lib/supabase/api";
 import {Switch} from "@/components/ui/switch";
+import {redirect} from "next/navigation";
 
 export const NewRide = ({user}: {user: User}) => {
     const [open, setOpen] = useState(false)
@@ -20,7 +21,7 @@ export const NewRide = ({user}: {user: User}) => {
         mode: "onSubmit",
     })
     const onSubmit = async (data: RideFormSchema, orgId: string) => {
-        await addRide({...data, organisationId: orgId})
+        addRide({...data, organisationId: orgId}).then(() => redirect(`/${user.organisationId}/dashboard`))
     }
     useEffect(() => {
         getAllClubMembers().then(result => setUsers(result))
@@ -125,6 +126,18 @@ export const NewRide = ({user}: {user: User}) => {
                             {...field}
                             aria-invalid={fieldState.invalid}
                             id="destination"
+                        />
+                        {fieldState.invalid && <FieldError errors={[fieldState.error]}/>}
+                    </Field>
+                )}/>
+                <Controller name="distance" control={control} render={({field, fieldState}) => (
+                    <Field data-invalid={fieldState.invalid}>
+                        <FieldLabel htmlFor="distance">Distance</FieldLabel>
+                        <Input
+                            {...field}
+                            aria-invalid={fieldState.invalid}
+                            id="distance"
+                            type="number"
                         />
                         {fieldState.invalid && <FieldError errors={[fieldState.error]}/>}
                     </Field>
