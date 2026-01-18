@@ -6,6 +6,8 @@ import {redirect} from "next/navigation";
 import {CustomSidebarTrigger} from "@/components/ui/customSIdebarTrigger";
 import {SignOutButton} from "@/components/ui/SIgnOut";
 import {getUserProfile} from "@/app/lib/actions";
+import {TabbedMenu} from "@/components/ui/tabbedMenu";
+import {AppHeader} from "@/components/ui/appHeader";
 
 export interface AuthUser {
     id: string | undefined;
@@ -23,27 +25,12 @@ export default async function Layout({children}: { children: ReactNode }) {
     if (!userProfile) return null
 
     return (
-        <SidebarProvider
-            style={
-                {
-                    "--sidebar-width": "calc(var(--spacing) * 72)",
-                    "--header-height": "calc(var(--spacing) * 12)",
-                } as React.CSSProperties
-            }
-        >
-            <AppSidebar user={userProfile} />
-            <SidebarInset>
-                <main className="w-full">
-                    <header
-                        className="sticky top-0 z-10 flex h-16 items-center border-b border-b-border justify-between bg-background px-6">
-                        <CustomSidebarTrigger />
-                        <SignOutButton />
-                    </header>
-                    <div className="py-1 md:p-3 w-full">
-                        {children}
-                    </div>
-                </main>
-            </SidebarInset>
-        </SidebarProvider>
+        <main className="w-full">
+            <AppHeader organisationId={data.user.app_metadata.organisation_id} />
+            <div className="py-1 md:p-3 w-full">
+                {children}
+            </div>
+            <TabbedMenu user={data.user} />
+        </main>
     )
 }
