@@ -3,9 +3,16 @@ import dayjs from 'dayjs';
 import {Card, CardContent, CardHeader, CardTitle} from "@/components/ui/card";
 import {RideFormSchema} from "@/lib/utils";
 import {Badge} from "@/components/ui/badge";
-import {ChevronRight, MapPin, Navigation, PlayCircleIcon, Route, Ruler, X} from "lucide-react";
+import {Avatar, AvatarFallback} from "@/components/ui/avatar";
+import {ChevronRight, MapPin, Navigation, Route, Ruler, X} from "lucide-react";
 import {Button} from "@/components/ui/button";
 import {redirect} from "next/navigation";
+
+const getInitials = (name: string) => {
+    const parts = name.trim().split(' ');
+    if (parts.length >= 2) return `${parts[0][0]}${parts[1][0]}`.toUpperCase();
+    return name.slice(0, 2).toUpperCase();
+}
 
 interface RideSummaryProps {
     ride: RideFormSchema,
@@ -59,12 +66,26 @@ export const RideDetailsSummaryCard = ({ride, onAttendanceClick, userId, organis
                     </div>
                 </div>
                 <div className="flex justify-between items-center">
-                    <div>
-                        {ride.attendanceList && ride.attendanceList.length > 0 ? (<p>{ride.attendanceList.length}</p>) :
-                            <p className="text-gray-400">Be the first to join!</p>}
-                    </div>
+                    {ride.attendanceList && ride.attendanceList.length > 0 ? (
+                        <div className="flex items-center gap-2">
+                            <div className="flex -space-x-2">
+                                {ride.attendanceList.slice(0, 3).map(attendee => (
+                                    <Avatar key={attendee.userId} className="size-7 border-2 border-white">
+                                        <AvatarFallback className="text-xs">
+                                            {getInitials(attendee.fullName || attendee.username)}
+                                        </AvatarFallback>
+                                    </Avatar>
+                                ))}
+                            </div>
+                            {ride.attendanceList.length > 3 && (
+                                <span className="text-sm text-gray-400">+{ride.attendanceList.length - 3}</span>
+                            )}
+                        </div>
+                    ) : (
+                        <p className="text-sm text-gray-400">Be the first to join!</p>
+                    )}
                     {
-                        ride.attendanceList?.includes(userId)
+                        ride.attendanceList?.some(a => a.userId === userId)
                             ? <Button variant="secondary" onClick={() => onAttendanceClick(false)}><X /> Leave Ride</Button>
                             : <Button onClick={() => onAttendanceClick(true)}>Join Ride <ChevronRight/></Button>
                     }

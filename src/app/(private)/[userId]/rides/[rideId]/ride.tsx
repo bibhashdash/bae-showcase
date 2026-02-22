@@ -1,15 +1,15 @@
 "use client"
-import {useEffect, useState} from "react";
-import {getAllRides, getRide, updateRideAttendance} from "@/lib/supabase/api";
-import {RideFormSchema, User} from "@/lib/utils";
-import {Button} from "@/components/ui/button";
-import {ChevronRight, X} from "lucide-react";
+import { Button } from "@/components/ui/button";
+import { getRide, updateRideAttendance } from "@/lib/supabase/api";
+import { RideFormSchema, User } from "@/lib/utils";
+import { ChevronRight, X } from "lucide-react";
+import { useEffect, useState } from "react";
 
 export const Ride = ({rideId, user}:{rideId: string, user: User}) => {
     const [ride, setRide] = useState<RideFormSchema>()
     useEffect(() => {
         getRide(rideId).then(result => setRide(result));
-    }, [])
+    }, [rideId])
     const handleAttendanceClick = (isAttending: boolean) => {
         updateRideAttendance(isAttending, user.organisationId, user.userId, rideId)
             .then(() => getRide(rideId).then(result => setRide(result)))
@@ -19,7 +19,7 @@ export const Ride = ({rideId, user}:{rideId: string, user: User}) => {
             <div className="flex items-center justify-between">
                 <p className="font-semibold text-2xl">{ride?.title}</p>
                 {
-                    ride && ride.attendanceList?.includes(user.userId)
+                    ride && ride.attendanceList?.some(a => a.userId === user.userId)
                         ? <Button variant="secondary" onClick={() => handleAttendanceClick(false)}><X /> Leave Ride</Button>
                         : <Button onClick={() => handleAttendanceClick(true)}>Join Ride <ChevronRight/></Button>
                 }
@@ -30,7 +30,11 @@ export const Ride = ({rideId, user}:{rideId: string, user: User}) => {
                 />
             </div>
             <div>
-
+                {
+                    ride?.attendanceList?.map(
+                        item => <p key={item.userId}>{item.fullName}</p>
+                    )
+                }
             </div>
 
         </div>

@@ -41,6 +41,12 @@ export const RegisterSchema = z.object({
     error: "Passwords do not match", path: ["confirm"]
 })
 
+export interface Attendee {
+    userId: string,
+    fullName: string,
+    username: string,
+}
+
 export interface RideFormSchema {
     id: string,
     title: string,
@@ -52,8 +58,8 @@ export interface RideFormSchema {
     routeUrl: string,
     description: string,
 
-    // attendance list is an array of userIds who have clicked going
-    attendanceList: Array<string>,
+    // attendance list is an array of attendees who have clicked going
+    attendanceList: Array<Attendee>,
     pace: string,
     distance: number,
     isOfficialClubRide: boolean,
