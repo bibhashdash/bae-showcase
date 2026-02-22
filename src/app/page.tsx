@@ -1,5 +1,3 @@
-import {Button} from "@/components/ui/button";
-import Link from "next/link";
 import {createClient} from "@/lib/supabase/server";
 import {redirect} from "next/navigation";
 
