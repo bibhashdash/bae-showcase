@@ -6,13 +6,14 @@ import {Input} from "@/components/ui/input";
 import {Button} from "@/components/ui/button";
 import {RideFormSchema, User} from "@/lib/utils";
 import {Textarea} from "@/components/ui/textarea"
-import {ChevronDownIcon} from "lucide-react"
+import {ChevronDownIcon, FileIcon} from "lucide-react"
 import {Calendar} from "@/components/ui/calendar"
 import {Popover, PopoverContent, PopoverTrigger,} from "@/components/ui/popover"
 import {Select, SelectContent, SelectItem, SelectTrigger, SelectValue,} from "@/components/ui/select"
 import {addRide, getAllClubMembers} from "@/lib/supabase/api";
 import {Switch} from "@/components/ui/switch";
 import {redirect} from "next/navigation";
+import Link from "next/link";
 
 export const NewRide = ({user}: {user: User}) => {
     const [open, setOpen] = useState(false)
@@ -150,6 +151,23 @@ export const NewRide = ({user}: {user: User}) => {
                             aria-invalid={fieldState.invalid}
                             id="routeUrl"
                         />
+                        <Link href={`/${user.organisationId}/routes`}>
+                            <Button variant="secondary">Create Route</Button>
+                        </Link>
+                        {fieldState.invalid && <FieldError errors={[fieldState.error]}/>}
+                    </Field>
+                )}/>
+                <Controller name="routeFile" control={control} render={({field, fieldState}) => (
+                    <Field data-invalid={fieldState.invalid}>
+                        <FieldLabel htmlFor="routeFile">Route link</FieldLabel>
+                        <Input
+                            {...field}
+                            aria-invalid={fieldState.invalid}
+                            id="routeFile"
+                            type="file"
+                            className="hidden"
+                        />
+                        <Button variant="secondary"><FileIcon/> Upload File</Button>
                         {fieldState.invalid && <FieldError errors={[fieldState.error]}/>}
                     </Field>
                 )}/>

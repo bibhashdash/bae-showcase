@@ -60,6 +60,7 @@ export interface RideFormSchema {
     leader: string,
     organisationId: string,
     rideType: string,
+    routeFile: string,
 }
 
 // export const RidesArraySchema = z.array(RideFormSchema);

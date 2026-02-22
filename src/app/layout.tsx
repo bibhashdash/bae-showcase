@@ -1,6 +1,7 @@
 import type {Metadata} from "next";
 import {Poppins} from "next/font/google";
 import "./globals.css";
+import "leaflet-routing-machine/dist/leaflet-routing-machine.css";
 
 const poppins = Poppins({
     variable: "--font-poppins",
@@ -20,11 +21,17 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <body
+    <head>
+        <link rel="stylesheet" href="https://unpkg.com/leaflet@1.7.1/dist/leaflet.css"
+              integrity="sha512-xodZBNTC5n17Xt2atTPuE1HxjVMSvLVW9ocqUKLsCC5CXdbqCmblAshOMAS6/keqq/sMZMZ19scR4PsZChSR7A=="
+              crossOrigin=""/>
+        <title>CC-Admin</title>
+    </head>
+    <body
         className={`${poppins.className} antialiased min-h-screen`}
-      >
-        {children}
-      </body>
+    >
+    {children}
+    </body>
     </html>
   );
 }
