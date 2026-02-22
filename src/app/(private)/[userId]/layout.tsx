@@ -21,9 +21,9 @@ export default async function Layout({children}: { children: ReactNode }) {
     if (!userProfile) return null
 
     return (
-        <main className="w-full h-full">
+        <main className="w-full h-dvh flex flex-col">
             <AppHeader organisationId={data.user.app_metadata.organisation_id} />
-            <div className="py-1 md:p-3 w-full">
+            <div className="flex-1 overflow-y-auto py-1 md:p-3 w-full">
                 {children}
             </div>
             <TabbedMenu organisationId={data.user.app_metadata.organisation_id} role={data.user.app_metadata.role} />

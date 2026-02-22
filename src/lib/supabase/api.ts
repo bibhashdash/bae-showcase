@@ -1,9 +1,31 @@
-import {Attendee, RideFormSchema, User} from "@/lib/utils";
+import {Attendee, Organisation, RideFormSchema, User} from "@/lib/utils";
 import {createClient} from "@/lib/supabase/client";
 
 export const signOut = async(): Promise<void> => {
     const supabase = createClient();
     await supabase.auth.signOut();
+}
+
+export const getOrganisation = async(organisationId: string): Promise<Organisation> => {
+    const supabase = createClient();
+    try {
+        const { data, error } = await supabase
+            .from('organisations')
+            .select(`name, address, email, rideLeaders: ride_leaders, ridePaces: ride_paces, rideTerrains: ride_terrains`)
+            .eq('id', organisationId)
+            .single()
+        if (error) {
+            console.log(error);
+            throw new Error('Error fetching organisation');
+        }
+        if (!data) {
+            throw new Error('Error fetching organisation');
+        }
+        return data as unknown as Organisation;
+    } catch (err) {
+        console.error('Validation or Connection Error:', err);
+        throw err;
+    }
 }
 
 export const getAllRides = async(): Promise<Array<RideFormSchema>> => {

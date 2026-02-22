@@ -83,3 +83,12 @@ export interface Task {
     value?: number
 }
 
+export interface Organisation {
+    name: string,
+    address: string,
+    email: string,
+    rideLeaders: Array<string>,
+    ridePaces: Array<string>,
+    rideTerrains: Array<string>
+}
+
