@@ -2,7 +2,7 @@
 
 import { useEffect, useState } from "react"
 import { getAllClubMembers, getOrganisation, updateOrganisationRideSettings } from "@/lib/supabase/api"
-import { Organisation, User } from "@/lib/utils"
+import { Organisation, terrainOptions, User } from "@/lib/utils"
 import { Separator } from "@/components/ui/separator"
 import { Dialog, DialogContent, DialogFooter, DialogHeader, DialogTitle } from "@/components/ui/dialog"
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select"

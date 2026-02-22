@@ -5,6 +5,15 @@ import {twMerge} from "tailwind-merge"
 export function cn(...inputs: ClassValue[]) {
     return twMerge(clsx(inputs))
 }
+export const terrainOptions = {
+    "road": "Road", 
+    "mountain": "Mountain", 
+    "gravel": "Gravel", 
+    "cycleTouring": "Cycle touring", 
+    "bikePacking": "Bikepacking", 
+    "bmx": "BMX", 
+    "track": "Track"
+}
 
 export interface User {
     id: string,
