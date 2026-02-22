@@ -28,6 +28,28 @@ export const getOrganisation = async(organisationId: string): Promise<Organisati
     }
 }
 
+export const updateOrganisationRideSettings = async (
+    organisationId: string,
+    rideLeaders: Array<string>,
+    ridePaces: Array<string>,
+    rideTerrains: Array<string>
+): Promise<void> => {
+    const supabase = createClient();
+    try {
+        const { error } = await supabase
+            .from('organisations')
+            .update({ ride_leaders: rideLeaders, ride_paces: ridePaces, ride_terrains: rideTerrains })
+            .eq('id', organisationId)
+        if (error) {
+            console.log(error);
+            throw new Error('Error updating organisation');
+        }
+    } catch (err) {
+        console.error('Validation or Connection Error:', err);
+        throw err;
+    }
+}
+
 export const getAllRides = async(): Promise<Array<RideFormSchema>> => {
     const supabase = createClient();
 
