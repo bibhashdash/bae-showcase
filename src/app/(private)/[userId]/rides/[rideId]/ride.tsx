@@ -24,11 +24,11 @@ export const Ride = ({rideId, user}:{rideId: string, user: User}) => {
                         : <Button onClick={() => handleAttendanceClick(true)}>Join Ride <ChevronRight/></Button>
                 }
             </div>
-            <div className="h-64 relative">
+            {/* <div className="h-64 relative">
                 <img className="h-full w-full object-cover transition-transform duration-500 group-hover:scale-105"
                      src="/ride-details-placeholder.png" alt="ride details placeholder"
                 />
-            </div>
+            </div> */}
             <div>
                 {
                     ride?.attendanceList?.map(
