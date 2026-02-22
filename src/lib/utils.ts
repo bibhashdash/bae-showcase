@@ -15,6 +15,7 @@ export interface User {
     userRole: number,
     organisationId: string,
     role: string,
+    isRideLeader: boolean,
 }
 
 export interface Error {

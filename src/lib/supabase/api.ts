@@ -85,7 +85,7 @@ export const getAllClubMembers = async(): Promise<Array<User>> => {
     try {
         const { data, error } = await supabase
             .from('profiles')
-            .select(`id: id, userId: user_id, fullName: full_name, username: username, bio: bio, userRole: user_role, organisationId: organisation_id`)
+            .select(`id: id, userId: user_id, fullName: full_name, username: username, bio: bio, userRole: user_role, organisationId: organisation_id, isRideLeader: is_ride_leader`)
 
         //   .returns<Array<MyType>>()
         if (error) {
