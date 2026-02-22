@@ -1,6 +1,6 @@
 "use client"
 import {RideFormSchema, User} from "@/lib/utils";
-import {getAllRides, getRide, updateRideAttendance} from "@/lib/supabase/api";
+import {getAllRides, updateRideAttendance} from "@/lib/supabase/api";
 import {useEffect, useState} from "react";
 import {RideDetailsSummaryCard} from "@/app/(private)/[userId]/dashboard/rideSummaryCard";
 
@@ -22,7 +22,7 @@ export const Feed = ({user, organisationId}: { user: User, organisationId: strin
     return (
         <div className="pt-2">
             {
-                allRides.length > 0 && allRides.map((ride: RideFormSchema, index) =>
+                allRides.length > 0 && allRides.map((ride: RideFormSchema) =>
                     <RideDetailsSummaryCard
                         organisationId={organisationId}
                         key={ride?.id}

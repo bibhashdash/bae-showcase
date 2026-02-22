@@ -1,13 +1,9 @@
-import {ReactNode} from "react";
-import {AppSidebar} from "@/components/ui/appSidebar";
-import {SidebarInset, SidebarProvider} from "@/components/ui/sidebar";
-import {createClient} from "@/lib/supabase/server";
-import {redirect} from "next/navigation";
-import {CustomSidebarTrigger} from "@/components/ui/customSIdebarTrigger";
-import {SignOutButton} from "@/components/ui/SIgnOut";
-import {getUserProfile} from "@/app/lib/actions";
-import {TabbedMenu} from "@/components/ui/tabbedMenu";
-import {AppHeader} from "@/components/ui/appHeader";
+import { getUserProfile } from "@/app/lib/actions";
+import { AppHeader } from "@/components/ui/appHeader";
+import { TabbedMenu } from "@/components/ui/tabbedMenu";
+import { createClient } from "@/lib/supabase/server";
+import { redirect } from "next/navigation";
+import { ReactNode } from "react";
 
 export interface AuthUser {
     id: string | undefined;
@@ -30,7 +26,7 @@ export default async function Layout({children}: { children: ReactNode }) {
             <div className="py-1 md:p-3 w-full">
                 {children}
             </div>
-            <TabbedMenu user={data.user} />
+            <TabbedMenu organisationId={data.user.app_metadata.organisation_id} role={data.user.app_metadata.role} />
         </main>
     )
 }
